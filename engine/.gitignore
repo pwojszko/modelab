@@ -1,0 +1,12 @@
+build/
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.vcxproj
+*.sln
+.vs/

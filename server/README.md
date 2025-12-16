@@ -9,6 +9,7 @@ Backend application built with FastAPI - a modern, fast web framework for buildi
 - **Data validation** - Uses Pydantic for request and response validation
 - **CORS** - Configured middleware for Cross-Origin Resource Sharing
 - **Type hints** - Full support for Python type hints
+- **C++ Engine Integration** - Communication with C++ library for high-performance computations
 
 ## 📋 Requirements
 
@@ -83,6 +84,15 @@ After starting the server, interactive documentation is available at:
 - `PUT /api/v1/items/{item_id}` - Update item
 - `DELETE /api/v1/items/{item_id}` - Delete item
 
+### Engine (`/api/v1/engine`) - C++ Integration
+
+- `GET /api/v1/engine/status` - Check if C++ engine is available
+- `POST /api/v1/engine/add` - Add two numbers using C++ engine
+- `POST /api/v1/engine/multiply` - Multiply two numbers using C++ engine
+- `POST /api/v1/engine/factorial` - Calculate factorial using C++ engine
+- `POST /api/v1/engine/process-string` - Process string (uppercase conversion) using C++ engine
+- `POST /api/v1/engine/sum-array` - Sum array of numbers using C++ engine
+
 ### Other
 
 - `GET /` - Home page
@@ -102,12 +112,37 @@ server/
 │   ├── models/
 │   │   ├── __init__.py
 │   │   └── schemas.py     # Pydantic models (data schemas)
-│   └── routers/
-│       ├── __init__.py
-│       ├── users.py       # User endpoints
-│       └── items.py       # Item endpoints
+│   ├── routers/
+│   │   ├── __init__.py
+│   │   ├── users.py       # User endpoints
+│   │   ├── items.py       # Item endpoints
+│   │   └── engine.py      # C++ engine endpoints
+│   └── engine_wrapper.py  # Python wrapper for C++ library
 └── README.md              # This file
 ```
+
+## 🔧 C++ Engine Setup
+
+Before using the engine endpoints, you need to compile the C++ library:
+
+1. Navigate to the `engine` folder:
+
+```bash
+cd ../engine
+```
+
+2. Create a build directory and compile:
+
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+```
+
+3. The compiled library will be in `build/bin/Release/` directory.
+
+For more details, see `engine/README.md`.
 
 ## ⚙️ Configuration
 
@@ -148,6 +183,27 @@ curl -X POST "http://localhost:8000/api/v1/items/?owner_id=1" \
     "title": "Example item",
     "description": "Item description",
     "price": 99.99
+  }'
+```
+
+### Use C++ engine (add numbers)
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/engine/add" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "a": 5,
+    "b": 3
+  }'
+```
+
+### Calculate factorial using C++ engine
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/engine/factorial" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "n": 10
   }'
 ```
 

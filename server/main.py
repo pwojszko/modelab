@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import items, users
+from app.routers import items, users, engine
 from app.core.config import settings
 
 app = FastAPI(
@@ -21,6 +21,7 @@ app.add_middleware(
 # Include routers
 app.include_router(users.router, prefix="/api/v1/users", tags=["users"])
 app.include_router(items.router, prefix="/api/v1/items", tags=["items"])
+app.include_router(engine.router, prefix="/api/v1/engine", tags=["engine"])
 
 
 @app.get("/")
