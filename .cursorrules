@@ -1,0 +1,29 @@
+# Cursor Rules
+
+## Language Requirements
+
+All code, comments, documentation, variable names, function names, class names, commit messages, and communication must be in English.
+
+### Code Standards
+
+- All code comments must be written in English
+- All variable names, function names, and class names must use English words
+- All string literals and user-facing messages should be in English
+- All error messages and log statements must be in English
+
+### Documentation Standards
+
+- All documentation files (README.md, \*.md) must be written in English
+- All code documentation (docstrings, JSDoc comments, etc.) must be in English
+- All API documentation must be in English
+
+### Communication Standards
+
+- All commit messages must be in English
+- All code review comments should be in English
+- All project-related communication should be in English
+
+### Exceptions
+
+- Only exception: file paths and URLs may contain non-English characters if necessary
+- Configuration values that reference external systems may use their native language if required

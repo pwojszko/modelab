@@ -1,0 +1,35 @@
+---
+alwaysApply: true
+---
+
+# Language Rule
+
+The entire project must be conducted in English. This includes:
+
+## Code
+
+- All variable names, function names, class names, and identifiers must be in English
+- All code comments and documentation strings must be in English
+- All error messages and log messages must be in English
+- All configuration files and their values should use English naming conventions
+
+## Documentation
+
+- All documentation files (README, markdown files, etc.) must be written in English
+- All API documentation and code examples must be in English
+- All inline code documentation (docstrings, JSDoc comments, etc.) must be in English
+
+## User Interface
+
+- All UI text, labels, buttons, and messages must be in English
+- All user-facing error messages and notifications must be in English
+
+## Communication
+
+- All commit messages must be in English
+- All code review comments and discussions should be in English
+- All project-related communication and documentation should be in English
+
+## Exceptions
+
+- Only exception: string literals that are part of the application's data or content (e.g., user-generated content, external API responses) may be in other languages if required by the application's functionality
