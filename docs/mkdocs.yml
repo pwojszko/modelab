@@ -1,0 +1,91 @@
+site_name: ModelSLab Documentation
+site_description: ModelSLab project documentation - C++ library and FastAPI server
+site_author: ModelSLab Team
+site_url: https://your-username.github.io/modelslab
+
+# Documentation directory (current directory when running from docs/)
+docs_dir: .
+
+# Repository
+repo_name: modelslab
+repo_url: https://github.com/your-username/modelslab
+edit_uri: edit/main/docs/
+
+# Theme
+theme:
+  name: material
+  palette:
+    # Light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+    - content.code.copy
+  language: en
+
+# Plugins
+plugins:
+  - search
+  - mermaid2
+
+# Markdown extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+# Navigation
+nav:
+  - Home: index.md
+  - Introduction:
+      - Overview: introduction/overview.md
+      - Architecture: introduction/architecture.md
+      - Quick Start: introduction/quickstart.md
+  - Engine (C++):
+      - Overview: engine/index.md
+      - Compilation: engine/compilation.md
+      - API Reference: engine/api.md
+      - Functions: engine/functions.md
+  - Server (FastAPI):
+      - Overview: server/index.md
+      - Installation: server/installation.md
+      - API Endpoints: server/api.md
+      - Configuration: server/configuration.md
+  - Usage Examples: examples.md
+  - Development:
+      - Project Structure: development/structure.md
+      - Contributing: development/contributing.md
+
+# Copyright
+copyright: Copyright &copy; 2024 ModelSLab Team

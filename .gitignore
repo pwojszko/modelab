@@ -38,3 +38,7 @@ wheels/
 .DS_Store
 Thumbs.db
 
+# MkDocs
+site/
+.mkdocs_cache/
+
