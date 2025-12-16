@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(Engine)
+project(Engine VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Find Doxygen
+find_package(Doxygen QUIET)
 
 # Set output directory
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -38,4 +41,21 @@ if(APPLE)
         OUTPUT_NAME "engine"
         SUFFIX ".dylib"
     )
+endif()
+
+# Documentation target
+if(DOXYGEN_FOUND)
+    # Create a custom target to generate documentation using Doxyfile
+    add_custom_target(docs
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating HTML documentation from Doxyfile"
+        VERBATIM
+    )
+    
+    message(STATUS "Doxygen found - 'docs' target available for generating documentation")
+    message(STATUS "Run 'cmake --build . --target docs' to generate documentation")
+else()
+    message(STATUS "Doxygen not found - documentation will not be generated")
+    message(STATUS "Install Doxygen to enable documentation generation")
 endif()

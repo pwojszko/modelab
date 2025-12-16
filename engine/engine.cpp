@@ -1,3 +1,9 @@
+/**
+ * @file engine.cpp
+ * @brief Implementation of Engine library functions
+ * @details This file contains implementations of all functions exported by the library.
+ */
+
 #include "engine.h"
 #include <cstring>
 #include <algorithm>

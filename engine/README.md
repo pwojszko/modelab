@@ -1,8 +1,8 @@
 # Engine - C++ Library
 
-Przykładowa biblioteka C++ do komunikacji z FastAPI.
+Example C++ library for communication with FastAPI.
 
-## Kompilacja
+## Compilation
 
 ### Windows (Visual Studio / MinGW)
 
@@ -13,7 +13,7 @@ cmake ..
 cmake --build . --config Release
 ```
 
-Biblioteka zostanie skompilowana jako `engine.dll` w folderze `build/bin/Release/`.
+The library will be compiled as `engine.dll` in the `build/bin/Release/` folder.
 
 ### Linux/Mac
 
@@ -24,16 +24,68 @@ cmake ..
 make
 ```
 
-Biblioteka zostanie skompilowana jako `libengine.so` (Linux) lub `libengine.dylib` (Mac).
+The library will be compiled as `libengine.so` (Linux) or `libengine.dylib` (Mac).
 
-## Funkcje
+## 📚 Documentation
 
-- `add(int a, int b)` - Dodaje dwie liczby
-- `multiply(int a, int b)` - Mnoży dwie liczby
-- `factorial(int n)` - Oblicza silnię
-- `process_string(const char* input, char* output, int size)` - Przetwarza string (konwertuje na wielkie litery)
-- `sum_array(double* array, int size)` - Sumuje elementy tablicy
+The library has automatically generated HTML documentation (similar to Swagger in the `server` folder).
 
-## Użycie z Python
+### Generating Documentation
 
-Biblioteka jest używana przez moduł `app/engine_wrapper.py` w FastAPI.
+#### Requirements
+
+Install Doxygen:
+
+- **Windows**: Download from [doxygen.nl](https://www.doxygen.nl/download.html) or use `choco install doxygen`
+- **Linux**: `sudo apt-get install doxygen` (Ubuntu/Debian) or `sudo yum install doxygen` (RHEL/CentOS)
+- **Mac**: `brew install doxygen`
+
+#### Generating via CMake
+
+After configuring the CMake project, you can generate documentation:
+
+```bash
+# Windows
+cmake --build . --target docs --config Release
+
+# Linux/Mac
+make docs
+```
+
+HTML documentation will be generated in the `docs/html/` folder.
+
+#### Opening Documentation
+
+After generation, open the `docs/html/index.html` file in your browser.
+
+#### Generating Directly with Doxygen
+
+Alternatively, you can use Doxygen directly:
+
+```bash
+doxygen Doxyfile
+```
+
+Documentation will be generated in the `docs/html/` folder.
+
+### Accessing Documentation
+
+After generating documentation:
+
+- Open `docs/html/index.html` in your browser
+- Documentation contains full descriptions of all functions, parameters, and usage examples
+- Interface is similar to Swagger UI - you can browse functions, their parameters, and examples
+
+## Functions
+
+- `add(int a, int b)` - Adds two numbers
+- `multiply(int a, int b)` - Multiplies two numbers
+- `factorial(int n)` - Calculates factorial
+- `process_string(const char* input, char* output, int size)` - Processes string (converts to uppercase)
+- `sum_array(double* array, int size)` - Sums array elements
+
+Detailed documentation for all functions is available in the generated HTML documentation.
+
+## Usage with Python
+
+The library is used by the `app/engine_wrapper.py` module in FastAPI.
