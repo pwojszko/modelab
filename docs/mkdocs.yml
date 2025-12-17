@@ -1,12 +1,16 @@
 site_name: ModelSLab Documentation
 site_description: ModelSLab project documentation - C++ library and FastAPI server
 site_author: ModelSLab Team
+# IMPORTANT: Update this URL with your actual GitHub Pages URL
+# Format: https://your-username.github.io/modelslab (for user/organization pages)
+# Or: https://your-username.github.io/repository-name (for project pages)
 site_url: https://your-username.github.io/modelslab
 
 # Documentation directory (current directory when running from docs/)
 docs_dir: .
 
 # Repository
+# IMPORTANT: Update these with your actual GitHub repository information
 repo_name: modelslab
 repo_url: https://github.com/your-username/modelslab
 edit_uri: edit/main/docs/
@@ -89,5 +93,3 @@ nav:
 
 # Copyright
 copyright: Copyright &copy; 2024 ModelSLab Team
-
-
