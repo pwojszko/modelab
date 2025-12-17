@@ -142,3 +142,4 @@ After successful installation:
 - [API Endpoints](api.md) - Learn about available endpoints
 - [Configuration](configuration.md) - Customize settings
 - [Usage Examples](../examples.md) - See examples
+

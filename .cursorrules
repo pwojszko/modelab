@@ -27,3 +27,4 @@ All code, comments, documentation, variable names, function names, class names, 
 
 - Only exception: file paths and URLs may contain non-English characters if necessary
 - Configuration values that reference external systems may use their native language if required
+

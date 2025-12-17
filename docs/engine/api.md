@@ -76,3 +76,4 @@ Doxygen documentation can be integrated with this MkDocs documentation through e
 - [Function List](functions.md) - Overview of available functions
 - [Compilation](compilation.md) - How to compile the library
 - [Server Documentation](../server/index.md) - How to use the library in Python
+

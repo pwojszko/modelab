@@ -357,3 +357,4 @@ except requests.exceptions.RequestException as e:
 - [API Endpoints](../server/api.md) - Complete list of endpoints
 - [Server Documentation](../server/index.md) - More information about the server
 - [Engine Documentation](../engine/index.md) - C++ library functions
+

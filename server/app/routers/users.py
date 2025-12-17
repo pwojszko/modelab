@@ -66,3 +66,4 @@ async def delete_user(user_id: int):
     users_db = [u for u in users_db if u["id"] != user_id]
     return None
 
+

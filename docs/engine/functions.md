@@ -141,3 +141,4 @@ Then open `docs/html/index.html` in your browser.
 - [API Reference](api.md) - Detailed API documentation
 - [Compilation](compilation.md) - How to compile the library
 - [Server Integration](../server/index.md) - How to use in Python
+

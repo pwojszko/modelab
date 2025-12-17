@@ -119,3 +119,4 @@ After compiling the library:
 - [Library Functions](functions.md) - Learn about available functions
 - [API Reference](api.md) - Detailed API documentation
 - [Server Integration](../server/index.md) - How to use the library in Python
+
