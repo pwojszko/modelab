@@ -9,6 +9,9 @@ site_url: https://your-username.github.io/modelslab
 # Documentation directory (current directory when running from docs/)
 docs_dir: .
 
+# Output directory (must be outside docs_dir to avoid conflicts)
+site_dir: ../site
+
 # Repository
 # IMPORTANT: Update these with your actual GitHub repository information
 repo_name: modelslab
