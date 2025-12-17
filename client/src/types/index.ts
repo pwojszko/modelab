@@ -63,3 +63,4 @@ export interface ProcessStringRequest {
 export interface SumArrayRequest {
   numbers: number[];
 }
+

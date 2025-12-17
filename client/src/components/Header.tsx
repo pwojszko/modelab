@@ -6,11 +6,18 @@ interface HeaderProps {
 
 export function Header({ error }: HeaderProps) {
   return (
-    <div className="bg-white rounded-lg shadow-xl p-8 mb-6">
-      <h1 className="text-4xl font-bold text-gray-800 mb-2">
-        ModelSLab API Client
-      </h1>
-      <p className="text-gray-600 mb-4">
+    <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-8 md:p-10 backdrop-blur-sm">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+          <span className="text-2xl">⚡</span>
+        </div>
+        <div>
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent">
+            ModelSLab API Client
+          </h1>
+        </div>
+      </div>
+      <p className="text-gray-400 text-lg mb-6 ml-1">
         Interactive interface for all server endpoints
       </p>
       <ErrorDisplay error={error} />

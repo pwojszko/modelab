@@ -4,8 +4,10 @@ interface JsonDisplayProps {
 
 export function JsonDisplay({ data }: JsonDisplayProps) {
   return (
-    <pre className="mt-2 p-2 bg-gray-100 rounded text-sm overflow-auto text-gray-800">
-      {JSON.stringify(data, null, 2)}
-    </pre>
+    <div className="mt-3 p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg border border-gray-700 shadow-inner">
+      <pre className="text-xs md:text-sm overflow-auto text-gray-200 font-mono leading-relaxed">
+        {JSON.stringify(data, null, 2)}
+      </pre>
+    </div>
   );
 }

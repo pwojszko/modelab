@@ -120,3 +120,4 @@ After compiling the library:
 - [API Reference](api.md) - Detailed API documentation
 - [Server Integration](../server/index.md) - How to use the library in Python
 
+

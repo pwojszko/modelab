@@ -35,3 +35,4 @@ export async function deleteUser(id: number): Promise<void> {
   });
   if (!response.ok) throw new Error("Failed to delete user");
 }
+
