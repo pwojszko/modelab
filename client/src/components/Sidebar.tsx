@@ -61,32 +61,6 @@ export function Sidebar({}: SidebarProps) {
           </span>
         </Link>
         <Link
-          to="/items"
-          className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
-            isActive("/items")
-              ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-[1.02]"
-              : "text-gray-300 hover:bg-slate-700/50 hover:text-white hover:scale-[1.01]"
-          }`}
-        >
-          <span className="flex items-center gap-2">
-            <span className="text-lg">📦</span>
-            <span className="font-medium">Items</span>
-          </span>
-        </Link>
-        <Link
-          to="/users"
-          className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
-            isActive("/users")
-              ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-[1.02]"
-              : "text-gray-300 hover:bg-slate-700/50 hover:text-white hover:scale-[1.01]"
-          }`}
-        >
-          <span className="flex items-center gap-2">
-            <span className="text-lg">👥</span>
-            <span className="font-medium">Users</span>
-          </span>
-        </Link>
-        <Link
           to="/root"
           className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
             isActive("/root")
@@ -170,6 +144,28 @@ export function Sidebar({}: SidebarProps) {
               <span className="flex items-center gap-2">
                 <span>📖</span>
                 <span>ReDoc</span>
+              </span>
+            </a>
+            <a
+              href="http://localhost:8000/admin/engine-calculation/list"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-3 py-2 rounded-lg text-xs text-gray-300 hover:bg-slate-700/50 hover:text-white transition-all duration-200 hover:scale-[1.02] border border-transparent hover:border-slate-600/50"
+            >
+              <span className="flex items-center gap-2">
+                <span>⚙️</span>
+                <span>Admin Panel</span>
+              </span>
+            </a>
+            <a
+              href="http://localhost:8001"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-3 py-2 rounded-lg text-xs text-gray-300 hover:bg-slate-700/50 hover:text-white transition-all duration-200 hover:scale-[1.02] border border-transparent hover:border-slate-600/50"
+            >
+              <span className="flex items-center gap-2">
+                <span>📖</span>
+                <span>Documentation</span>
               </span>
             </a>
           </div>
