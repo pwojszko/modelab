@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import * as engineService from "../service/engine";
 import type {
   EngineResponse,
@@ -31,8 +32,11 @@ export function useAddNumbers() {
   const queryClient = useQueryClient();
   return useMutation<EngineResponse, Error, AddRequest>({
     mutationFn: engineService.addNumbers,
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       queryClient.setQueryData(engineKeys.result("add"), data);
+      toast.success("Numbers added successfully", {
+        description: `${variables.a} + ${variables.b} = ${data.result}`,
+      });
     },
   });
 }
@@ -41,8 +45,11 @@ export function useMultiplyNumbers() {
   const queryClient = useQueryClient();
   return useMutation<EngineResponse, Error, MultiplyRequest>({
     mutationFn: engineService.multiplyNumbers,
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       queryClient.setQueryData(engineKeys.result("multiply"), data);
+      toast.success("Numbers multiplied successfully", {
+        description: `${variables.a} × ${variables.b} = ${data.result}`,
+      });
     },
   });
 }
@@ -51,8 +58,11 @@ export function useCalculateFactorial() {
   const queryClient = useQueryClient();
   return useMutation<EngineResponse, Error, FactorialRequest>({
     mutationFn: engineService.calculateFactorial,
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       queryClient.setQueryData(engineKeys.result("factorial"), data);
+      toast.success("Factorial calculated successfully", {
+        description: `${variables.n}! = ${data.result}`,
+      });
     },
   });
 }
@@ -63,6 +73,9 @@ export function useProcessString() {
     mutationFn: engineService.processString,
     onSuccess: (data) => {
       queryClient.setQueryData(engineKeys.result("processString"), data);
+      toast.success("String processed successfully", {
+        description: data.message || `Result: ${data.result}`,
+      });
     },
   });
 }
@@ -71,8 +84,11 @@ export function useSumArray() {
   const queryClient = useQueryClient();
   return useMutation<EngineResponse, Error, SumArrayRequest>({
     mutationFn: engineService.sumArray,
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       queryClient.setQueryData(engineKeys.result("sumArray"), data);
+      toast.success("Array summed successfully", {
+        description: `[${variables.numbers.join(", ")}] = ${data.result}`,
+      });
     },
   });
 }

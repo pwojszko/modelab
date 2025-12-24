@@ -1,3 +1,5 @@
+import { Card, CardContent } from "@/components/ui/card";
+
 interface MixerVisualizationProps {
   speed?: number;
   temperature?: number;
@@ -16,7 +18,8 @@ export function MixerVisualization({
   const bowlColor = isRunning ? "#475569" : "#334155";
 
   return (
-    <div className="h-full w-full bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6 backdrop-blur-sm flex items-center justify-center min-h-0 overflow-hidden">
+    <Card variant="dark" className="h-full w-full flex items-center justify-center min-h-0 overflow-hidden">
+      <CardContent className="p-6 w-full h-full">
       <svg
         width="100%"
         height="100%"
@@ -463,7 +466,8 @@ export function MixerVisualization({
           </text>
         </g>
       </svg>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 

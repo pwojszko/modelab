@@ -1,6 +1,24 @@
 import { useState } from "react";
-import * as engineService from "../service/engine";
 import type { EngineResponse } from "../types";
+import {
+  useEngineStatus,
+  useAddNumbers,
+  useMultiplyNumbers,
+  useCalculateFactorial,
+} from "../hooks/useEngine";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface PumpParameters {
   pressure: number;
@@ -14,7 +32,10 @@ interface ParametersPanelProps {
   onEngineResult?: (result: EngineResponse, operation: string) => void;
 }
 
-export function ParametersPanel({ onParameterChange, onEngineResult }: ParametersPanelProps) {
+export function ParametersPanel({
+  onParameterChange,
+  onEngineResult,
+}: ParametersPanelProps) {
   const [parameters, setParameters] = useState<PumpParameters>({
     pressure: 5.0,
     flowRate: 100,
@@ -23,11 +44,15 @@ export function ParametersPanel({ onParameterChange, onEngineResult }: Parameter
   });
 
   const [showEngineSection, setShowEngineSection] = useState(false);
-  const [loading, setLoading] = useState<string | null>(null);
-  const [engineStatus, setEngineStatus] = useState<EngineResponse | null>(null);
   const [addForm, setAddForm] = useState({ a: 0, b: 0 });
   const [multiplyForm, setMultiplyForm] = useState({ a: 0, b: 0 });
   const [factorialForm, setFactorialForm] = useState({ n: 0 });
+
+  // React Query hooks
+  const engineStatusQuery = useEngineStatus();
+  const addMutation = useAddNumbers();
+  const multiplyMutation = useMultiplyNumbers();
+  const factorialMutation = useCalculateFactorial();
 
   const handleChange = (key: keyof PumpParameters, value: number | string) => {
     const newParams = { ...parameters, [key]: value };
@@ -35,42 +60,26 @@ export function ParametersPanel({ onParameterChange, onEngineResult }: Parameter
     onParameterChange?.(newParams);
   };
 
-  const handleApiCall = async (
-    call: () => Promise<EngineResponse>,
-    operation: string
-  ) => {
-    setLoading(operation);
-    try {
-      const result = await call();
-      setLoading(null);
-      onEngineResult?.(result, operation);
-      return result;
-    } catch (error) {
-      setLoading(null);
-      console.error(`Error in ${operation}:`, error);
-    }
-  };
-
   return (
-    <div className="h-full w-full bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-700/50 p-6 flex flex-col min-h-0 overflow-hidden relative">
-      {/* Subtle glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 rounded-2xl pointer-events-none" />
-      
-      <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6 flex-shrink-0 relative z-10">
-        Parameters
-      </h2>
-      
-      <div className="flex-1 space-y-6 overflow-y-auto min-h-0 relative z-10">
+    <Card
+      variant="dark"
+      className="h-full w-full flex flex-col min-h-0 overflow-hidden relative"
+    >
+      <CardHeader className="flex-shrink-0">
+        <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          Parameters
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex-1 space-y-6 overflow-y-auto min-h-0">
         {/* Pressure Input */}
         <div>
-          <label className="block text-sm font-semibold text-gray-200 mb-2">
-            Pressure (bar)
-          </label>
-          <input
+          <Label className="mb-2">Pressure (bar)</Label>
+          <Input
             type="number"
             value={parameters.pressure}
-            onChange={(e) => handleChange("pressure", parseFloat(e.target.value) || 0)}
-            className="w-full px-4 py-3 bg-slate-700/50 border-2 border-slate-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500"
+            onChange={(e) =>
+              handleChange("pressure", parseFloat(e.target.value) || 0)
+            }
             step="0.1"
             min="0"
             max="10"
@@ -79,14 +88,13 @@ export function ParametersPanel({ onParameterChange, onEngineResult }: Parameter
 
         {/* Flow Rate Input */}
         <div>
-          <label className="block text-sm font-semibold text-gray-200 mb-2">
-            Flow Rate (L/min)
-          </label>
-          <input
+          <Label className="mb-2">Flow Rate (L/min)</Label>
+          <Input
             type="number"
             value={parameters.flowRate}
-            onChange={(e) => handleChange("flowRate", parseInt(e.target.value) || 0)}
-            className="w-full px-4 py-3 bg-slate-700/50 border-2 border-slate-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500"
+            onChange={(e) =>
+              handleChange("flowRate", parseInt(e.target.value) || 0)
+            }
             min="0"
             max="500"
           />
@@ -94,18 +102,20 @@ export function ParametersPanel({ onParameterChange, onEngineResult }: Parameter
 
         {/* Mode Select */}
         <div>
-          <label className="block text-sm font-semibold text-gray-200 mb-2">
-            Mode
-          </label>
-          <select
+          <Label className="mb-2">Mode</Label>
+          <Select
             value={parameters.mode}
-            onChange={(e) => handleChange("mode", e.target.value)}
-            className="w-full px-4 py-3 bg-slate-700/50 border-2 border-slate-600/50 rounded-xl text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500 cursor-pointer"
+            onValueChange={(value) => handleChange("mode", value)}
           >
-            <option value="auto">Auto</option>
-            <option value="manual">Manual</option>
-            <option value="scheduled">Scheduled</option>
-          </select>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="auto">Auto</SelectItem>
+              <SelectItem value="manual">Manual</SelectItem>
+              <SelectItem value="scheduled">Scheduled</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Speed Input */}
@@ -119,7 +129,7 @@ export function ParametersPanel({ onParameterChange, onEngineResult }: Parameter
             onChange={(e) => handleChange("speed", parseInt(e.target.value))}
             className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
             style={{
-              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${parameters.speed}%, #475569 ${parameters.speed}%, #475569 100%)`
+              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${parameters.speed}%, #475569 ${parameters.speed}%, #475569 100%)`,
             }}
             min="0"
             max="100"
@@ -130,159 +140,210 @@ export function ParametersPanel({ onParameterChange, onEngineResult }: Parameter
         </div>
 
         {/* Status Display */}
-        <div className="pt-4 border-t border-slate-700/50">
-          <div className="flex items-center justify-between mb-3 p-3 bg-slate-800/30 rounded-xl">
-            <span className="text-sm font-medium text-gray-300">Status:</span>
+        <div className="pt-4">
+          <Separator className="mb-4" />
+          <div className="flex items-center justify-between mb-3 p-3 bg-muted rounded-xl">
+            <span className="text-sm font-medium">Status:</span>
             <span className="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               Running
             </span>
           </div>
-          <div className="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
-            <span className="text-sm font-medium text-gray-300">Temperature:</span>
+          <div className="flex items-center justify-between p-3 bg-muted rounded-xl">
+            <span className="text-sm font-medium">Temperature:</span>
             <span className="text-sm font-bold text-blue-400">42°C</span>
           </div>
         </div>
 
         {/* Engine API Section */}
-        <div className="pt-4 border-t border-slate-700/50">
-          <button
+        <div className="pt-4">
+          <Separator className="mb-4" />
+          <Button
             onClick={() => setShowEngineSection(!showEngineSection)}
-            className="w-full flex items-center justify-between text-sm font-semibold text-gray-300 hover:text-white transition-all duration-200 mb-4 p-3 rounded-xl hover:bg-slate-700/30"
+            variant="ghost"
+            className="w-full flex items-center justify-between mb-4"
           >
             <span className="flex items-center gap-2">
               <span className="text-lg">⚙️</span>
               Engine Calculations
             </span>
-            <span className={`transition-transform duration-200 ${showEngineSection ? "rotate-180" : ""}`}>▼</span>
-          </button>
+            <span
+              className={`transition-transform duration-200 ${
+                showEngineSection ? "rotate-180" : ""
+              }`}
+            >
+              ▼
+            </span>
+          </Button>
 
           {showEngineSection && (
             <div className="space-y-4">
               {/* Engine Status */}
               <div>
-                  <button
-                    onClick={() => handleApiCall(engineService.getEngineStatus, "engineStatus")}
-                    disabled={loading === "engineStatus"}
-                    className="w-full px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl hover:from-emerald-600 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-semibold transition-all duration-200 shadow-lg hover:shadow-emerald-500/30 transform hover:scale-[1.02] active:scale-[0.98]"
+                <Button
+                  onClick={() => engineStatusQuery.refetch()}
+                  disabled={engineStatusQuery.isFetching}
+                  variant="secondary"
+                  className="w-full"
+                >
+                  {engineStatusQuery.isFetching ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <span className="animate-spin">⏳</span>
+                      Checking...
+                    </span>
+                  ) : (
+                    "Check Engine Status"
+                  )}
+                </Button>
+                {engineStatusQuery.data && (
+                  <Alert
+                    variant={
+                      engineStatusQuery.data.success ? "default" : "destructive"
+                    }
+                    className="mt-2"
                   >
-                    {loading === "engineStatus" ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <span className="animate-spin">⏳</span>
-                        Checking...
-                      </span>
-                    ) : (
-                      "Check Engine Status"
-                    )}
-                  </button>
-                {engineStatus && (
-                  <div className={`mt-2 p-2 rounded text-xs ${engineStatus.success ? "text-green-300 bg-green-900/20" : "text-red-300 bg-red-900/20"}`}>
-                    {engineStatus.message}
-                  </div>
+                    <AlertDescription className="text-xs">
+                      {engineStatusQuery.data.message}
+                    </AlertDescription>
+                  </Alert>
+                )}
+                {engineStatusQuery.isError && (
+                  <Alert variant="destructive" className="mt-2">
+                    <AlertDescription className="text-xs">
+                      Error: {engineStatusQuery.error?.message}
+                    </AlertDescription>
+                  </Alert>
                 )}
               </div>
 
               {/* Add Numbers */}
               <div>
-                <label className="block text-xs font-semibold text-gray-200 mb-2">
-                  Add Numbers
-                </label>
+                <Label className="text-xs mb-2">Add Numbers</Label>
                 <div className="flex gap-2">
-                  <input
+                  <Input
                     type="number"
                     value={addForm.a}
-                    onChange={(e) => setAddForm({ ...addForm, a: Number(e.target.value) })}
-                    className="flex-1 px-3 py-2 bg-slate-700/50 border-2 border-slate-600/50 rounded-lg text-white text-xs placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500"
+                    onChange={(e) =>
+                      setAddForm({ ...addForm, a: Number(e.target.value) })
+                    }
                     placeholder="a"
+                    className="flex-1"
                   />
-                  <input
+                  <Input
                     type="number"
                     value={addForm.b}
-                    onChange={(e) => setAddForm({ ...addForm, b: Number(e.target.value) })}
-                    className="flex-1 px-3 py-2 bg-slate-700/50 border-2 border-slate-600/50 rounded-lg text-white text-xs placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500"
+                    onChange={(e) =>
+                      setAddForm({ ...addForm, b: Number(e.target.value) })
+                    }
                     placeholder="b"
+                    className="flex-1"
                   />
-                  <button
-                    onClick={() => handleApiCall(() => engineService.addNumbers(addForm), "add")}
-                    disabled={loading === "add"}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg text-xs font-semibold hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-blue-500/30 transform hover:scale-105 active:scale-95"
+                  <Button
+                    onClick={() =>
+                      addMutation.mutate(addForm, {
+                        onSuccess: (result) => {
+                          onEngineResult?.(result, "add");
+                        },
+                      })
+                    }
+                    disabled={addMutation.isPending}
+                    size="icon"
                   >
-                    {loading === "add" ? (
+                    {addMutation.isPending ? (
                       <span className="animate-spin">⏳</span>
                     ) : (
                       "+"
                     )}
-                  </button>
+                  </Button>
                 </div>
               </div>
 
               {/* Multiply Numbers */}
               <div>
-                <label className="block text-xs font-semibold text-gray-200 mb-2">
-                  Multiply Numbers
-                </label>
+                <Label className="text-xs mb-2">Multiply Numbers</Label>
                 <div className="flex gap-2">
-                  <input
+                  <Input
                     type="number"
                     value={multiplyForm.a}
-                    onChange={(e) => setMultiplyForm({ ...multiplyForm, a: Number(e.target.value) })}
-                    className="flex-1 px-3 py-2 bg-slate-700/50 border-2 border-slate-600/50 rounded-lg text-white text-xs placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500"
+                    onChange={(e) =>
+                      setMultiplyForm({
+                        ...multiplyForm,
+                        a: Number(e.target.value),
+                      })
+                    }
                     placeholder="a"
+                    className="flex-1"
                   />
-                  <input
+                  <Input
                     type="number"
                     value={multiplyForm.b}
-                    onChange={(e) => setMultiplyForm({ ...multiplyForm, b: Number(e.target.value) })}
-                    className="flex-1 px-3 py-2 bg-slate-700/50 border-2 border-slate-600/50 rounded-lg text-white text-xs placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500"
+                    onChange={(e) =>
+                      setMultiplyForm({
+                        ...multiplyForm,
+                        b: Number(e.target.value),
+                      })
+                    }
                     placeholder="b"
+                    className="flex-1"
                   />
-                  <button
-                    onClick={() => handleApiCall(() => engineService.multiplyNumbers(multiplyForm), "multiply")}
-                    disabled={loading === "multiply"}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg text-xs font-semibold hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-blue-500/30 transform hover:scale-105 active:scale-95"
+                  <Button
+                    onClick={() =>
+                      multiplyMutation.mutate(multiplyForm, {
+                        onSuccess: (result) => {
+                          onEngineResult?.(result, "multiply");
+                        },
+                      })
+                    }
+                    disabled={multiplyMutation.isPending}
+                    size="icon"
                   >
-                    {loading === "multiply" ? (
+                    {multiplyMutation.isPending ? (
                       <span className="animate-spin">⏳</span>
                     ) : (
                       "×"
                     )}
-                  </button>
+                  </Button>
                 </div>
               </div>
 
               {/* Factorial */}
               <div>
-                <label className="block text-xs font-semibold text-gray-200 mb-2">
-                  Factorial
-                </label>
+                <Label className="text-xs mb-2">Factorial</Label>
                 <div className="flex gap-2">
-                  <input
+                  <Input
                     type="number"
                     value={factorialForm.n}
-                    onChange={(e) => setFactorialForm({ n: Number(e.target.value) })}
-                    className="flex-1 px-3 py-2 bg-slate-700/50 border-2 border-slate-600/50 rounded-lg text-white text-xs placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all duration-200 hover:border-slate-500"
+                    onChange={(e) =>
+                      setFactorialForm({ n: Number(e.target.value) })
+                    }
                     placeholder="n (0-20)"
                     min="0"
                     max="20"
+                    className="flex-1"
                   />
-                  <button
-                    onClick={() => handleApiCall(() => engineService.calculateFactorial(factorialForm), "factorial")}
-                    disabled={loading === "factorial"}
-                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg text-xs font-semibold hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-blue-500/30 transform hover:scale-105 active:scale-95"
+                  <Button
+                    onClick={() =>
+                      factorialMutation.mutate(factorialForm, {
+                        onSuccess: (result) => {
+                          onEngineResult?.(result, "factorial");
+                        },
+                      })
+                    }
+                    disabled={factorialMutation.isPending}
+                    size="icon"
                   >
-                    {loading === "factorial" ? (
+                    {factorialMutation.isPending ? (
                       <span className="animate-spin">⏳</span>
                     ) : (
                       "!"
                     )}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
-

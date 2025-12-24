@@ -1,3 +1,5 @@
+import { Card, CardContent } from "@/components/ui/card";
+
 interface PumpVisualizationProps {
   pressure?: number;
   flowRate?: number;
@@ -14,10 +16,8 @@ export function PumpVisualization({
   const pipeColor = "#475569";
 
   return (
-    <div className="h-full w-full bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-700/50 p-6 flex items-center justify-center min-h-0 overflow-hidden relative">
-      {/* Subtle glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 rounded-2xl pointer-events-none" />
-      
+    <Card variant="dark" className="h-full w-full flex items-center justify-center min-h-0 overflow-hidden relative">
+      <CardContent className="p-6 w-full h-full">
       <svg
         width="100%"
         height="100%"
@@ -209,6 +209,7 @@ export function PumpVisualization({
           {flowRate} L/min
         </text>
       </svg>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
