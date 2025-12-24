@@ -27,76 +27,88 @@ export function useEngineStatus() {
   });
 }
 
+// Generic engine mutation hook
+interface UseEngineMutationOptions<TRequest> {
+  key: string;
+  mutationFn: (request: TRequest) => Promise<EngineResponse>;
+  successMessage: string;
+  getDescription?: (data: EngineResponse, variables: TRequest) => string;
+  showToast?: boolean;
+}
+
+function useEngineMutation<TRequest>({
+  key,
+  mutationFn,
+  successMessage,
+  getDescription,
+  showToast = true,
+}: UseEngineMutationOptions<TRequest>) {
+  const queryClient = useQueryClient();
+  return useMutation<EngineResponse, Error, TRequest>({
+    mutationFn,
+    onSuccess: (data, variables) => {
+      queryClient.setQueryData(engineKeys.result(key), data);
+      if (showToast) {
+        toast.success(successMessage, {
+          description: getDescription
+            ? getDescription(data, variables)
+            : data.message || `Result: ${data.result}`,
+        });
+      }
+    },
+  });
+}
+
 // Engine Mutations
-export function useAddNumbers() {
-  const queryClient = useQueryClient();
-  return useMutation<EngineResponse, Error, AddRequest>({
+export function useAddNumbers(showToast: boolean = true) {
+  return useEngineMutation<AddRequest>({
+    key: "add",
     mutationFn: engineService.addNumbers,
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(engineKeys.result("add"), data);
-      toast.success("Numbers added successfully", {
-        description: `${variables.a} + ${variables.b} = ${data.result}`,
-      });
-    },
+    successMessage: "Numbers added successfully",
+    getDescription: (data, variables) =>
+      `${variables.a} + ${variables.b} = ${data.result}`,
+    showToast,
   });
 }
 
-export function useMultiplyNumbers() {
-  const queryClient = useQueryClient();
-  return useMutation<EngineResponse, Error, MultiplyRequest>({
+export function useMultiplyNumbers(showToast: boolean = true) {
+  return useEngineMutation<MultiplyRequest>({
+    key: "multiply",
     mutationFn: engineService.multiplyNumbers,
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(engineKeys.result("multiply"), data);
-      toast.success("Numbers multiplied successfully", {
-        description: `${variables.a} × ${variables.b} = ${data.result}`,
-      });
-    },
+    successMessage: "Numbers multiplied successfully",
+    getDescription: (data, variables) =>
+      `${variables.a} × ${variables.b} = ${data.result}`,
+    showToast,
   });
 }
 
-export function useCalculateFactorial() {
-  const queryClient = useQueryClient();
-  return useMutation<EngineResponse, Error, FactorialRequest>({
+export function useCalculateFactorial(showToast: boolean = true) {
+  return useEngineMutation<FactorialRequest>({
+    key: "factorial",
     mutationFn: engineService.calculateFactorial,
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(engineKeys.result("factorial"), data);
-      toast.success("Factorial calculated successfully", {
-        description: `${variables.n}! = ${data.result}`,
-      });
-    },
+    successMessage: "Factorial calculated successfully",
+    getDescription: (data, variables) => `${variables.n}! = ${data.result}`,
+    showToast,
   });
 }
 
-export function useProcessString() {
-  const queryClient = useQueryClient();
-  return useMutation<EngineResponse, Error, ProcessStringRequest>({
+export function useProcessString(showToast: boolean = true) {
+  return useEngineMutation<ProcessStringRequest>({
+    key: "processString",
     mutationFn: engineService.processString,
-    onSuccess: (data) => {
-      queryClient.setQueryData(engineKeys.result("processString"), data);
-      toast.success("String processed successfully", {
-        description: data.message || `Result: ${data.result}`,
-      });
-    },
+    successMessage: "String processed successfully",
+    getDescription: (data) => data.message || `Result: ${data.result}`,
+    showToast,
   });
 }
 
-export function useSumArray() {
-  const queryClient = useQueryClient();
-  return useMutation<EngineResponse, Error, SumArrayRequest>({
+export function useSumArray(showToast: boolean = true) {
+  return useEngineMutation<SumArrayRequest>({
+    key: "sumArray",
     mutationFn: engineService.sumArray,
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(engineKeys.result("sumArray"), data);
-      toast.success("Array summed successfully", {
-        description: `[${variables.numbers.join(", ")}] = ${data.result}`,
-      });
-    },
-  });
-}
-
-// Helper hook to get engine result by key
-export function useEngineResult(key: string) {
-  return useQuery<EngineResponse>({
-    queryKey: engineKeys.result(key),
-    enabled: false, // Only fetch when explicitly set via setQueryData
+    successMessage: "Array summed successfully",
+    getDescription: (data, variables) =>
+      `[${variables.numbers.join(", ")}] = ${data.result}`,
+    showToast,
   });
 }
