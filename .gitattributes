@@ -1,0 +1,3 @@
+# Auto-generated files should be readonly
+**/routeTree.gen.ts -diff -merge linguist-generated=true
+

@@ -10,10 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-form": "^1.27.6",
+    "@tanstack/react-query": "^5.90.12",
+    "@tanstack/react-router": "^1.143.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@tanstack/router-devtools": "^1.143.3",
+    "@tanstack/router-plugin": "^1.143.3",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
