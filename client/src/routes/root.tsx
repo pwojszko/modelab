@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RootEndpoints } from "../components/RootEndpoints";
+import { RootEndpoints } from "../features/root/components/RootEndpoints";
 
 export const Route = createFileRoute("/root")({
   component: RootPage,
@@ -12,4 +12,3 @@ function RootPage() {
     </div>
   );
 }
-

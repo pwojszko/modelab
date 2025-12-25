@@ -1,5 +1,5 @@
-import { useRoot, useHealth } from "../hooks/useRoot";
-import { JsonDisplay } from "./common/JsonDisplay";
+import { useRoot, useHealth } from "../../../hooks/useRoot";
+import { JsonDisplay } from "../../../components/common/JsonDisplay";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";

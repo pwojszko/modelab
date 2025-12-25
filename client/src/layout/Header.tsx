@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ErrorDisplay } from "./common/ErrorDisplay";
+import { ErrorDisplay } from "../components/common/ErrorDisplay";
 
 interface HeaderProps {
   error: string | null;

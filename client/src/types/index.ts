@@ -27,3 +27,14 @@ export interface SumArrayRequest {
   numbers: number[];
 }
 
+// Root types
+export interface RootResponse {
+  message: string;
+  version: string;
+  docs: string;
+}
+
+export interface HealthResponse {
+  status: string;
+}
+

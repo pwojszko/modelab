@@ -1,29 +1,21 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { useEngineStatus } from "../hooks/useEngine";
 import { useHealth } from "../hooks/useRoot";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { StatusBadge } from "../components/common/StatusBadge";
 
 export function Sidebar() {
-  const router = useRouterState();
-  const currentPath = router.location.pathname;
+  const { location } = useRouterState();
+  const currentPath = location.pathname;
 
-  // Queries - these auto-refetch every 30 seconds
   const engineStatusQuery = useEngineStatus();
   const healthQuery = useHealth();
 
   const checkStatus = () => {
-    toast.promise(
-      Promise.all([engineStatusQuery.refetch(), healthQuery.refetch()]),
-      {
-        loading: "Refreshing API status...",
-        success: "API status refreshed - Server and engine status updated",
-        error: "Failed to refresh API status",
-      }
-    );
+    engineStatusQuery.refetch();
+    healthQuery.refetch();
   };
 
   const isActive = (path: string) => {
@@ -32,6 +24,12 @@ export function Sidebar() {
     }
     return currentPath.startsWith(path);
   };
+
+  const navigationItems = [
+    { path: "/", icon: "📊", label: "Dashboard" },
+    { path: "/engine", icon: "⚙️", label: "Engine" },
+    { path: "/root", icon: "🔧", label: "Root" },
+  ];
 
   return (
     <Card
@@ -45,45 +43,22 @@ export function Sidebar() {
       </CardHeader>
       <CardContent className="flex-1 min-h-0 overflow-y-auto mb-4">
         <nav className="space-y-2 mb-4">
-          <Link
-            to="/"
-            className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
-              isActive("/")
-                ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-[1.02]"
-                : "text-gray-300 hover:bg-slate-700/50 hover:text-white hover:scale-[1.01]"
-            }`}
-          >
-            <span className="flex items-center gap-2">
-              <span className="text-lg">📊</span>
-              <span className="font-medium">Dashboard</span>
-            </span>
-          </Link>
-          <Link
-            to="/engine"
-            className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
-              isActive("/engine")
-                ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-[1.02]"
-                : "text-gray-300 hover:bg-slate-700/50 hover:text-white hover:scale-[1.01]"
-            }`}
-          >
-            <span className="flex items-center gap-2">
-              <span className="text-lg">⚙️</span>
-              <span className="font-medium">Engine</span>
-            </span>
-          </Link>
-          <Link
-            to="/root"
-            className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
-              isActive("/root")
-                ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-[1.02]"
-                : "text-gray-300 hover:bg-slate-700/50 hover:text-white hover:scale-[1.01]"
-            }`}
-          >
-            <span className="flex items-center gap-2">
-              <span className="text-lg">🔧</span>
-              <span className="font-medium">Root</span>
-            </span>
-          </Link>
+          {navigationItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
+                isActive(item.path)
+                  ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-[1.02]"
+                  : "text-gray-300 hover:bg-slate-700/50 hover:text-white hover:scale-[1.01]"
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <span className="text-lg">{item.icon}</span>
+                <span className="font-medium">{item.label}</span>
+              </span>
+            </Link>
+          ))}
         </nav>
       </CardContent>
 
@@ -112,37 +87,23 @@ export function Sidebar() {
         <div className="space-y-2.5 text-xs">
           <div className="flex items-center justify-between p-2 rounded-lg bg-muted">
             <span className="font-medium">Server:</span>
-            <Badge
-              variant={healthQuery.data ? "default" : "destructive"}
-              className="flex items-center gap-1.5"
-            >
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  healthQuery.data
-                    ? "bg-emerald-400 animate-pulse"
-                    : "bg-red-400"
-                }`}
-              />
-              {healthQuery.data ? "Online" : "Offline"}
-            </Badge>
+            <StatusBadge
+              isLoading={healthQuery.isLoading}
+              isSuccess={!!healthQuery.data}
+              loadingText="Loading..."
+              successText="Online"
+              errorText="Offline"
+            />
           </div>
           <div className="flex items-center justify-between p-2 rounded-lg bg-muted">
             <span className="font-medium">Engine:</span>
-            <Badge
-              variant={
-                engineStatusQuery.data?.success ? "default" : "destructive"
-              }
-              className="flex items-center gap-1.5"
-            >
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  engineStatusQuery.data?.success
-                    ? "bg-emerald-400 animate-pulse"
-                    : "bg-red-400"
-                }`}
-              />
-              {engineStatusQuery.data?.success ? "Ready" : "Unavailable"}
-            </Badge>
+            <StatusBadge
+              isLoading={engineStatusQuery.isLoading}
+              isSuccess={!!engineStatusQuery.data?.success}
+              loadingText="Loading..."
+              successText="Ready"
+              errorText="Unavailable"
+            />
           </div>
         </div>
 

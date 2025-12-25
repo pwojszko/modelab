@@ -8,7 +8,7 @@ import {
   AreaChart,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { EngineResponse } from "../types";
+import type { EngineResponse } from "../../../types";
 
 interface ChartProps {
   data?: Array<{ time: string; value: number }>;
