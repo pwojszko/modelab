@@ -1,7 +1,7 @@
-import { useMultiplyNumbers } from "../../../hooks/useEngine";
+import { useMultiplyNumbers } from "../hooks/useEngine";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MultiplyForm } from "@/components/forms/MultiplyForm";
+import { MultiplyForm } from "@/features/engine/forms/MultiplyForm";
 
 export function MultiplyCard() {
   const multiplyMutation = useMultiplyNumbers();

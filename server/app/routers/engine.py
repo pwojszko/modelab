@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 from app.engine_wrapper import get_engine, is_engine_available
 from app.core.database import get_db
 from app.models.database import EngineCalculation
+from app.models.schemas import EngineCalculationResponse
 
 router = APIRouter()
 
@@ -50,6 +51,26 @@ async def engine_status():
         success=available,
         message="Engine is available" if available else "Engine library not found. Please compile the C++ library first."
     )
+
+
+@router.get("/calculations", response_model=List[EngineCalculationResponse])
+async def get_calculations(db: Session = Depends(get_db)):
+    """Get list of all engine calculations."""
+    calculations = db.query(EngineCalculation).order_by(EngineCalculation.created_at.desc()).all()
+    
+    # Convert success integer (1/0) to boolean and create response objects
+    return [
+        EngineCalculationResponse(
+            id=calc.id,
+            operation_type=calc.operation_type,
+            input_data=calc.input_data,
+            result=calc.result,
+            success=bool(calc.success),
+            message=calc.message,
+            created_at=calc.created_at
+        )
+        for calc in calculations
+    ]
 
 
 @router.post("/add", response_model=EngineResponse)

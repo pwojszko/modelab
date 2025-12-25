@@ -5,6 +5,7 @@ import type {
   FactorialRequest,
   ProcessStringRequest,
   SumArrayRequest,
+  EngineCalculationResponse,
 } from "../types";
 import { API_BASE_URL } from "./config";
 
@@ -88,3 +89,11 @@ export async function sumArray(
   return response.json();
 }
 
+export async function getCalculations(): Promise<EngineCalculationResponse[]> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/engine/calculations`);
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.detail || "Failed to get calculations");
+  }
+  return response.json();
+}

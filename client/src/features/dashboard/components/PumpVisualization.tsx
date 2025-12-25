@@ -1,4 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { PumpStatusDisplay } from "@/features/dashboard/components/parametersPanel/PumpStatusDisplay";
+import { TemperatureWidget } from "@/features/dashboard/components/TemperatureWidget";
 
 export function PumpVisualization() {
   return (
@@ -6,7 +8,13 @@ export function PumpVisualization() {
       variant="dark"
       className="h-full w-full flex items-center justify-center min-h-0 overflow-hidden relative"
     >
-      <CardContent className="p-6 w-full h-full">
+      <CardContent className="p-6 w-full h-full relative">
+        <div className="absolute top-4 left-4 z-20">
+          <PumpStatusDisplay />
+        </div>
+        <div className="absolute top-4 right-4 z-20">
+          <TemperatureWidget />
+        </div>
         <svg
           width="100%"
           height="100%"
@@ -132,8 +140,7 @@ export function PumpVisualization() {
               style={{ animationDelay: "0.75s" }}
             />
           </>
-          {/* Status indicator - simple circle */}
-          <circle cx="300" cy="280" r="12" fill="#10b981" />
+
           {/* Information labels with enhanced styling */}
           <text
             x="300"

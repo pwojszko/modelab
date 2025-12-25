@@ -1,7 +1,7 @@
-import { useCalculateFactorial } from "../../../hooks/useEngine";
+import { useCalculateFactorial } from "../hooks/useEngine";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { FactorialForm } from "@/components/forms/FactorialForm";
+import { FactorialForm } from "@/features/engine/forms/FactorialForm";
 
 export function FactorialCard() {
   const factorialMutation = useCalculateFactorial();

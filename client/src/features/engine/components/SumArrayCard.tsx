@@ -1,7 +1,7 @@
-import { useSumArray } from "../../../hooks/useEngine";
+import { useSumArray } from "../hooks/useEngine";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { SumArrayForm } from "@/components/forms/SumArrayForm";
+import { SumArrayForm } from "@/features/engine/forms/SumArrayForm";
 
 export function SumArrayCard() {
   const sumArrayMutation = useSumArray();

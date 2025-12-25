@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import * as rootService from "../service/root";
-import { createRefetchWithToast } from "../lib/queryUtils";
+import * as rootService from "../../../../service/root";
+import { createRefetchWithToast } from "../../../../lib/queryUtils";
 
 type RootQueryKey = "ROOT" | "HEALTH";
 

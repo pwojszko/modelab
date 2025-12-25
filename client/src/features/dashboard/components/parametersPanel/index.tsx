@@ -1,6 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FieldGroup } from "@/components/ui/field";
-import { PumpStatusDisplay } from "@/features/dashboard/components/parametersPanel/PumpStatusDisplay";
+import { AddForm } from "@/features/engine/forms/AddForm";
+import { MultiplyForm } from "@/features/engine/forms/MultiplyForm";
+import { FactorialForm } from "@/features/engine/forms/FactorialForm";
+import { ProcessStringForm } from "@/features/engine/forms/ProcessStringForm";
+import { SumArrayForm } from "@/features/engine/forms/SumArrayForm";
 
 export function ParametersPanel() {
   return (
@@ -15,7 +19,16 @@ export function ParametersPanel() {
       </CardHeader>
       <CardContent className="flex-1 space-y-6 overflow-y-auto min-h-0">
         <FieldGroup className="space-y-6">
-          <PumpStatusDisplay />
+          <div className="space-y-5">
+            <h3 className="text-lg font-semibold text-gray-200 mb-1">Engine Forms</h3>
+            <div className="space-y-4">
+              <AddForm />
+              <MultiplyForm />
+              <FactorialForm />
+              <ProcessStringForm />
+              <SumArrayForm />
+            </div>
+          </div>
         </FieldGroup>
       </CardContent>
     </Card>

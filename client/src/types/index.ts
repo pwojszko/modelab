@@ -27,6 +27,16 @@ export interface SumArrayRequest {
   numbers: number[];
 }
 
+export interface EngineCalculationResponse {
+  id: number;
+  operation_type: string;
+  input_data: string;
+  result: string | null;
+  success: boolean;
+  message: string | null;
+  created_at: string;
+}
+
 // Root types
 export interface RootResponse {
   message: string;

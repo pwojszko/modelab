@@ -1,7 +1,7 @@
-import { useProcessString } from "../../../hooks/useEngine";
+import { useProcessString } from "../hooks/useEngine";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ProcessStringForm } from "@/components/forms/ProcessStringForm";
+import { ProcessStringForm } from "@/features/engine/forms/ProcessStringForm";
 
 export function ProcessStringCard() {
   const processStringMutation = useProcessString();

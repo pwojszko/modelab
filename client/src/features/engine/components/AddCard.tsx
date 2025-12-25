@@ -1,7 +1,7 @@
-import { useAddNumbers } from "../../../hooks/useEngine";
+import { useAddNumbers } from "../hooks/useEngine";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AddForm } from "@/components/forms/AddForm";
+import { AddForm } from "@/features/engine/forms/AddForm";
 
 export function AddCard() {
   const addMutation = useAddNumbers();

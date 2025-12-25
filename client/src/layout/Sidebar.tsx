@@ -1,10 +1,11 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useEngineStatus } from "../hooks/useEngine";
-import { useHealth } from "../hooks/useRoot";
+import { useEngineStatus } from "../features/engine/hooks/useEngine";
+import { useHealth } from "../features/root/components/hooks/useRoot";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { StatusBadge } from "../components/common/StatusBadge";
+import { cn } from "@/lib/utils";
 
 export function Sidebar() {
   const { location } = useRouterState();
@@ -27,14 +28,12 @@ export function Sidebar() {
 
   const navigationItems = [
     { path: "/", icon: "📊", label: "Dashboard" },
-    { path: "/engine", icon: "⚙️", label: "Engine" },
-    { path: "/root", icon: "🔧", label: "Root" },
   ];
 
   return (
     <Card
       variant="dark"
-      className="h-full w-full flex flex-col min-h-0 overflow-hidden relative"
+      className="h-full w-full flex flex-col min-h-0 overflow-hidden relative p-4"
     >
       <CardHeader className="flex-shrink-0">
         <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -47,11 +46,12 @@ export function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`group block px-4 py-3 rounded-xl transition-all duration-200 ${
+              className={cn(
+                "group block px-4 py-3 rounded-xl transition-all duration-200",
                 isActive(item.path)
                   ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/30 scale-[1.02]"
                   : "text-gray-300 hover:bg-slate-700/50 hover:text-white hover:scale-[1.01]"
-              }`}
+              )}
             >
               <span className="flex items-center gap-2">
                 <span className="text-lg">{item.icon}</span>

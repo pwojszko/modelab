@@ -1,14 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import * as engineService from "../service/engine";
-import type { EngineResponse } from "../types";
-import { createRefetchWithToast } from "../lib/queryUtils";
+import * as engineService from "../../../service/engine";
+import type { EngineResponse } from "../../../types";
+import { createRefetchWithToast } from "../../../lib/queryUtils";
 
-type EngineQueryKey = "ENGINE" | "ENGINE_STATUS";
+type EngineQueryKey = "ENGINE" | "ENGINE_STATUS" | "ENGINE_CALCULATIONS";
 
 export const engineKeys: Record<EngineQueryKey, EngineQueryKey[]> = {
   ENGINE: ["ENGINE"],
   ENGINE_STATUS: ["ENGINE", "ENGINE_STATUS"],
+  ENGINE_CALCULATIONS: ["ENGINE", "ENGINE_CALCULATIONS"],
 };
 
 export function useEngineStatus() {
@@ -65,7 +66,7 @@ function useEngineMutation<TRequest>({
 
 export function useAddNumbers(showToast: boolean = true) {
   return useEngineMutation({
-    invalidateKeys: engineKeys.ENGINE,
+    invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.addNumbers,
     successMessage: "Numbers added successfully",
     getDescription: (data, variables) =>
@@ -76,7 +77,7 @@ export function useAddNumbers(showToast: boolean = true) {
 
 export function useMultiplyNumbers(showToast: boolean = true) {
   return useEngineMutation({
-    invalidateKeys: engineKeys.ENGINE,
+    invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.multiplyNumbers,
     successMessage: "Numbers multiplied successfully",
     getDescription: (data, variables) =>
@@ -87,7 +88,7 @@ export function useMultiplyNumbers(showToast: boolean = true) {
 
 export function useCalculateFactorial(showToast: boolean = true) {
   return useEngineMutation({
-    invalidateKeys: engineKeys.ENGINE,
+    invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.calculateFactorial,
     successMessage: "Factorial calculated successfully",
     getDescription: (data, variables) => `${variables.n}! = ${data.result}`,
@@ -97,7 +98,7 @@ export function useCalculateFactorial(showToast: boolean = true) {
 
 export function useProcessString(showToast: boolean = true) {
   return useEngineMutation({
-    invalidateKeys: engineKeys.ENGINE,
+    invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.processString,
     successMessage: "String processed successfully",
     getDescription: (data) => data.message || `Result: ${data.result}`,
@@ -107,11 +108,27 @@ export function useProcessString(showToast: boolean = true) {
 
 export function useSumArray(showToast: boolean = true) {
   return useEngineMutation({
-    invalidateKeys: engineKeys.ENGINE,
+    invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.sumArray,
     successMessage: "Array summed successfully",
     getDescription: (data, variables) =>
       `[${variables.numbers.join(", ")}] = ${data.result}`,
     showToast,
   });
+}
+
+export function useCalculations() {
+  const query = useQuery({
+    queryKey: engineKeys.ENGINE_CALCULATIONS,
+    queryFn: engineService.getCalculations,
+  });
+
+  return {
+    ...query,
+    refetch: createRefetchWithToast(query, {
+      loading: "Refreshing calculations...",
+      success: "Calculations refreshed",
+      error: "Failed to refresh calculations",
+    }),
+  };
 }
