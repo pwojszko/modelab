@@ -1,6 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
 import * as engineService from "../../../service/engine";
-import { createRefetchWithToast } from "../../../lib/queryUtils";
 import { useModifiedQuery } from "@/hooks/useModifiedQuery";
 import { useModifiedMutation } from "@/hooks/useModifiedMutation";
 
@@ -29,9 +27,12 @@ export function useAddNumbers() {
   return useModifiedMutation({
     invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.addNumbers,
-    successMessage: "Numbers added successfully",
-    getDescription: (data, variables) =>
-      `${variables.a} + ${variables.b} = ${data.result}`,
+    messages: {
+      loading: "Adding numbers...",
+      success: (data, request) =>
+        `Numbers added successfully: ${request.a} + ${request.b} = ${data.result}`,
+      error: (error) => `Failed to add numbers: ${error.message}`,
+    },
   });
 }
 
@@ -39,9 +40,12 @@ export function useMultiplyNumbers() {
   return useModifiedMutation({
     invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.multiplyNumbers,
-    successMessage: "Numbers multiplied successfully",
-    getDescription: (data, variables) =>
-      `${variables.a} × ${variables.b} = ${data.result}`,
+    messages: {
+      loading: "Multiplying numbers...",
+      success: (data, request) =>
+        `Numbers multiplied successfully: ${request.a} * ${request.b} = ${data.result}`,
+      error: (error) => `Failed to multiply numbers: ${error.message}`,
+    },
   });
 }
 
@@ -49,8 +53,12 @@ export function useCalculateFactorial() {
   return useModifiedMutation({
     invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.calculateFactorial,
-    successMessage: "Factorial calculated successfully",
-    getDescription: (data, variables) => `${variables.n}! = ${data.result}`,
+    messages: {
+      loading: "Calculating factorial...",
+      success: (data, request) =>
+        `Factorial calculated successfully: ${request.n}! = ${data.result}`,
+      error: (error) => `Failed to calculate factorial: ${error.message}`,
+    },
   });
 }
 
@@ -58,8 +66,12 @@ export function useProcessString() {
   return useModifiedMutation({
     invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.processString,
-    successMessage: "String processed successfully",
-    getDescription: (data) => data.message || `Result: ${data.result}`,
+    messages: {
+      loading: "Processing string...",
+      success: (data, request) =>
+        `String processed successfully: ${request.text} = ${data.result}`,
+      error: (error) => `Failed to process string: ${error.message}`,
+    },
   });
 }
 
@@ -67,24 +79,26 @@ export function useSumArray() {
   return useModifiedMutation({
     invalidateKeys: engineKeys.ENGINE_CALCULATIONS,
     mutationFn: engineService.sumArray,
-    successMessage: "Array summed successfully",
-    getDescription: (data, variables) =>
-      `[${variables.numbers.join(", ")}] = ${data.result}`,
+    messages: {
+      loading: "Summing array...",
+      success: (data, request) =>
+        `Array summed successfully: ${request.numbers.join(", ")} = ${
+          data.result
+        }`,
+      error: (error) => `Failed to sum array: ${error.message}`,
+    },
   });
 }
 
 export function useCalculations() {
-  const query = useQuery({
+  return useModifiedQuery({
     queryKey: engineKeys.ENGINE_CALCULATIONS,
     queryFn: engineService.getCalculations,
-  });
-
-  return {
-    ...query,
-    refetch: createRefetchWithToast(query, {
+    refetchInterval: 30000,
+    messages: {
       loading: "Refreshing calculations...",
       success: "Calculations refreshed",
       error: "Failed to refresh calculations",
-    }),
-  };
+    },
+  });
 }

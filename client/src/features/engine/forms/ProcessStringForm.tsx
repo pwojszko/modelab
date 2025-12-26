@@ -20,7 +20,7 @@ export function ProcessStringForm() {
     <div className="rounded-lg border border-gray-700/50 bg-gray-800/30 p-3 backdrop-blur-sm transition-all hover:border-gray-600/50 hover:bg-gray-800/40">
       <form
         onSubmit={form.handleSubmit((data) =>
-          processStringMutation.mutate(data)
+          processStringMutation.mutateWithToast(data)
         )}
       >
         <div className="space-y-3">

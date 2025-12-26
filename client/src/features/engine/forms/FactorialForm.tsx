@@ -17,7 +17,7 @@ export function FactorialForm() {
   const factorialMutation = useCalculateFactorial();
 
   const handleSubmit = (data: FactorialFormData) => {
-    factorialMutation.mutate(data);
+    factorialMutation.mutateWithToast(data);
   };
 
   return (

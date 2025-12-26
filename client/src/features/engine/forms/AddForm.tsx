@@ -17,7 +17,7 @@ export function AddForm() {
   const addMutation = useAddNumbers();
 
   const handleSubmit = (data: AddFormData) => {
-    addMutation.mutate(data);
+    addMutation.mutateWithToast(data);
   };
 
   return (

@@ -30,7 +30,7 @@ export function SumArrayForm() {
     <div className="rounded-lg border border-gray-700/50 bg-gray-800/30 p-3 backdrop-blur-sm transition-all hover:border-gray-600/50 hover:bg-gray-800/40">
       <form
         onSubmit={form.handleSubmit((data) =>
-          sumArrayMutation.mutate({
+          sumArrayMutation.mutateWithToast({
             numbers: data.numbers.split(",").map(Number),
           })
         )}

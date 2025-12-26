@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { UseQueryOptions, useQuery } from "@tanstack/react-query";
 import { useThrottledIsFetching } from "./useThrottledIsFetching";
 import { createRefetchWithToast } from "@/lib/queryUtils";
 
@@ -9,29 +9,23 @@ type ModifiedQueryMessages = {
 };
 
 export function useModifiedQuery<TQueryFnData = unknown>({
-  queryKey,
-  queryFn,
-  refetchInterval,
   messages,
+  ...props
 }: {
   queryKey: string[];
-  queryFn: () => Promise<TQueryFnData>;
-  refetchInterval: number;
-  messages: ModifiedQueryMessages;
-}) {
+  messages?: ModifiedQueryMessages;
+} & UseQueryOptions<TQueryFnData>) {
   const query = useQuery({
-    queryKey,
-    queryFn: queryFn,
-    refetchInterval,
+    ...props,
   });
 
   return {
     ...query,
     throttledIsFetching: useThrottledIsFetching(query.isFetching),
     refetchWithToast: createRefetchWithToast(query, {
-      loading: messages.loading,
-      success: messages.success,
-      error: messages.error,
+      loading: messages?.loading || "Refreshing...",
+      success: messages?.success || "Refreshed",
+      error: messages?.error || "Failed to refresh",
     }),
   };
 }

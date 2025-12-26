@@ -17,7 +17,7 @@ export function MultiplyForm() {
   const multiplyMutation = useMultiplyNumbers();
 
   const handleSubmit = (data: MultiplyFormData) => {
-    multiplyMutation.mutate(data);
+    multiplyMutation.mutateWithToast(data);
   };
 
   return (
