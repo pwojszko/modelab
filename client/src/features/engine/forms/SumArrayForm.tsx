@@ -3,13 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { sumArraySchema, type SumArrayFormData } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Field,
-  FieldContent,
-  FieldLabel,
-  FieldGroup,
-  FieldError,
-} from "@/components/ui/field";
+import { FieldError } from "@/components/ui/field";
 import { useSumArray } from "@/features/engine/hooks/useEngine";
 import { Sigma, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -75,13 +69,16 @@ export function SumArrayForm() {
             </div>
             <Button
               type="submit"
-              disabled={sumArrayMutation.isPending || parsedNumbers.length === 0}
+              disabled={
+                sumArrayMutation.throttledIsPending ||
+                parsedNumbers.length === 0
+              }
               className={cn(
                 "bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-medium shadow-lg shadow-indigo-500/20 transition-all h-9 px-4",
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
             >
-              {sumArrayMutation.isPending ? (
+              {sumArrayMutation.throttledIsPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
               ) : (
                 <Sigma className="h-3.5 w-3.5" />

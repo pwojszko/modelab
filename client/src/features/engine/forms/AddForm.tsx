@@ -4,13 +4,7 @@ import { addSchema, type AddFormData } from "@/lib/schemas";
 import { useAddNumbers } from "@/features/engine/hooks/useEngine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Field,
-  FieldContent,
-  FieldLabel,
-  FieldGroup,
-  FieldError,
-} from "@/components/ui/field";
+import { FieldError } from "@/components/ui/field";
 import { Plus, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -93,13 +87,13 @@ export function AddForm() {
             </div>
             <Button
               type="submit"
-              disabled={addMutation.isPending}
+              disabled={addMutation.throttledIsPending}
               className={cn(
                 "bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-medium shadow-lg shadow-blue-500/20 transition-all h-9 px-4",
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
             >
-              {addMutation.isPending ? (
+              {addMutation.throttledIsPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
               ) : (
                 <Plus className="h-3.5 w-3.5" />

@@ -19,12 +19,12 @@ export function EngineStatusCard() {
       </CardHeader>
       <CardContent className="space-y-3">
         <Button
-          onClick={() => engineStatusQuery.refetch()}
-          disabled={engineStatusQuery.isFetching}
+          onClick={() => engineStatusQuery.refetchWithToast()}
+          disabled={engineStatusQuery.throttledIsFetching}
           variant="secondary"
           className="w-full"
         >
-          {engineStatusQuery.isFetching ? (
+          {engineStatusQuery.throttledIsFetching ? (
             <span className="flex items-center justify-center gap-2">
               <span className="animate-spin">⏳</span>
               Loading...

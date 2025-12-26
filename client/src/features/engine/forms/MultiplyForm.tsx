@@ -4,13 +4,7 @@ import { multiplySchema, type MultiplyFormData } from "@/lib/schemas";
 import { useMultiplyNumbers } from "@/features/engine/hooks/useEngine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Field,
-  FieldContent,
-  FieldLabel,
-  FieldGroup,
-  FieldError,
-} from "@/components/ui/field";
+import { FieldError } from "@/components/ui/field";
 import { X, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +28,9 @@ export function MultiplyForm() {
             <div className="p-1.5 rounded-md bg-purple-500/10 border border-purple-500/20">
               <X className="h-3.5 w-3.5 text-purple-400" />
             </div>
-            <h4 className="text-sm font-semibold text-gray-200">Multiplication</h4>
+            <h4 className="text-sm font-semibold text-gray-200">
+              Multiplication
+            </h4>
           </div>
 
           <div className="flex items-end gap-2">
@@ -93,13 +89,13 @@ export function MultiplyForm() {
             </div>
             <Button
               type="submit"
-              disabled={multiplyMutation.isPending}
+              disabled={multiplyMutation.throttledIsPending}
               className={cn(
                 "bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-medium shadow-lg shadow-purple-500/20 transition-all h-9 px-4",
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
             >
-              {multiplyMutation.isPending ? (
+              {multiplyMutation.throttledIsPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
               ) : (
                 <X className="h-3.5 w-3.5" />

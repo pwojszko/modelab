@@ -4,13 +4,7 @@ import { factorialSchema, type FactorialFormData } from "@/lib/schemas";
 import { useCalculateFactorial } from "@/features/engine/hooks/useEngine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Field,
-  FieldContent,
-  FieldLabel,
-  FieldGroup,
-  FieldError,
-} from "@/components/ui/field";
+import { FieldError } from "@/components/ui/field";
 import { FunctionSquare, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -68,13 +62,13 @@ export function FactorialForm() {
             </div>
             <Button
               type="submit"
-              disabled={factorialMutation.isPending}
+              disabled={factorialMutation.throttledIsPending}
               className={cn(
                 "bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-medium shadow-lg shadow-emerald-500/20 transition-all h-9 px-4",
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
             >
-              {factorialMutation.isPending ? (
+              {factorialMutation.throttledIsPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
               ) : (
                 <FunctionSquare className="h-3.5 w-3.5" />

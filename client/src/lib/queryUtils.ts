@@ -1,4 +1,8 @@
-import { UseQueryResult } from "@tanstack/react-query";
+import {
+  UseQueryResult,
+  RefetchOptions,
+  QueryObserverResult,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export interface RefetchToastMessages {
@@ -11,16 +15,15 @@ export function createRefetchWithToast<TData, TError>(
   query: UseQueryResult<TData, TError>,
   messages: RefetchToastMessages
 ) {
-  return (showToast: boolean = true) => {
-    if (showToast) {
-      toast.promise(query.refetch(), {
-        loading: messages.loading,
-        success: messages.success,
-        error: messages.error,
-      });
-    } else {
-      query.refetch();
-    }
+  return (
+    options?: RefetchOptions
+  ): Promise<QueryObserverResult<TData, TError>> => {
+    const refetchPromise = query.refetch(options);
+    toast.promise(refetchPromise, {
+      loading: messages.loading,
+      success: messages.success,
+      error: messages.error,
+    });
+    return refetchPromise;
   };
 }
-

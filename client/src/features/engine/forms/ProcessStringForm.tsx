@@ -3,13 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { processStringSchema, type ProcessStringFormData } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Field,
-  FieldContent,
-  FieldLabel,
-  FieldGroup,
-  FieldError,
-} from "@/components/ui/field";
+import { FieldError } from "@/components/ui/field";
 import { useProcessString } from "@/features/engine/hooks/useEngine";
 import { Type, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -25,14 +19,18 @@ export function ProcessStringForm() {
   return (
     <div className="rounded-lg border border-gray-700/50 bg-gray-800/30 p-3 backdrop-blur-sm transition-all hover:border-gray-600/50 hover:bg-gray-800/40">
       <form
-        onSubmit={form.handleSubmit((data) => processStringMutation.mutate(data))}
+        onSubmit={form.handleSubmit((data) =>
+          processStringMutation.mutate(data)
+        )}
       >
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-md bg-cyan-500/10 border border-cyan-500/20">
               <Type className="h-3.5 w-3.5 text-cyan-400" />
             </div>
-            <h4 className="text-sm font-semibold text-gray-200">String Processing</h4>
+            <h4 className="text-sm font-semibold text-gray-200">
+              String Processing
+            </h4>
           </div>
 
           <div className="flex items-end gap-2">
@@ -61,13 +59,13 @@ export function ProcessStringForm() {
             </div>
             <Button
               type="submit"
-              disabled={processStringMutation.isPending}
+              disabled={processStringMutation.throttledIsPending}
               className={cn(
                 "bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-white font-medium shadow-lg shadow-cyan-500/20 transition-all h-9 px-4",
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
             >
-              {processStringMutation.isPending ? (
+              {processStringMutation.throttledIsPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
               ) : (
                 <Type className="h-3.5 w-3.5" />

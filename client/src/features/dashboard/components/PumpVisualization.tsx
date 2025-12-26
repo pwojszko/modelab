@@ -31,9 +31,9 @@ export function PumpVisualization() {
           </defs>
           {/* Inlet pipe - simple horizontal line */}
           <line
-            x1="50"
+            x1="60"
             y1="200"
-            x2="210"
+            x2="200"
             y2="200"
             stroke="#475569"
             strokeWidth="12"
@@ -114,7 +114,7 @@ export function PumpVisualization() {
           </>
           {/* Outlet pipe - simple horizontal line */}
           <line
-            x1="390"
+            x1="400"
             y1="200"
             x2="550"
             y2="200"

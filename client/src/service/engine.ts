@@ -24,7 +24,8 @@ export async function addNumbers(request: AddRequest): Promise<EngineResponse> {
   });
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || "Failed to add numbers");
+    console.log(error);
+    throw new Error(error.detail[0].msg || "Failed to add numbers");
   }
   return response.json();
 }
@@ -39,7 +40,7 @@ export async function multiplyNumbers(
   });
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || "Failed to multiply numbers");
+    throw new Error(error.detail[0].msg || "Failed to multiply numbers");
   }
   return response.json();
 }
@@ -54,7 +55,7 @@ export async function calculateFactorial(
   });
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || "Failed to calculate factorial");
+    throw new Error(error.detail[0].msg || "Failed to calculate factorial");
   }
   return response.json();
 }
@@ -69,7 +70,7 @@ export async function processString(
   });
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || "Failed to process string");
+    throw new Error(error.detail[0].msg || "Failed to process string");
   }
   return response.json();
 }
@@ -84,7 +85,7 @@ export async function sumArray(
   });
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || "Failed to sum array");
+    throw new Error(error.detail[0].msg || "Failed to sum array");
   }
   return response.json();
 }
@@ -93,7 +94,7 @@ export async function getCalculations(): Promise<EngineCalculationResponse[]> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/calculations`);
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || "Failed to get calculations");
+    throw new Error(error.detail[0].msg || "Failed to get calculations");
   }
   return response.json();
 }

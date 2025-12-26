@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import * as rootService from "../../../../service/root";
-import { createRefetchWithToast } from "../../../../lib/queryUtils";
+import { useModifiedQuery } from "@/hooks/useModifiedQuery";
 
 type RootQueryKey = "ROOT" | "HEALTH";
 
@@ -10,32 +9,27 @@ export const rootKeys: Record<RootQueryKey, RootQueryKey[]> = {
 };
 
 export function useRoot() {
-  const query = useQuery({
+  return useModifiedQuery({
     queryKey: rootKeys.ROOT,
     queryFn: rootService.getRoot,
-  });
-  return {
-    ...query,
-    refetch: createRefetchWithToast(query, {
+    refetchInterval: 30000,
+    messages: {
       loading: "Refreshing root...",
       success: "Root refreshed",
       error: "Failed to refresh root",
-    }),
-  };
+    },
+  });
 }
 
 export function useHealth() {
-  const query = useQuery({
+  return useModifiedQuery({
     queryKey: rootKeys.HEALTH,
     queryFn: rootService.getHealth,
     refetchInterval: 30000,
-  });
-  return {
-    ...query,
-    refetch: createRefetchWithToast(query, {
+    messages: {
       loading: "Refreshing health...",
       success: "Health refreshed",
       error: "Failed to refresh health",
-    }),
-  };
+    },
+  });
 }

@@ -14,14 +14,13 @@ export function ParametersPanel() {
     >
       <CardHeader className="flex-shrink-0">
         <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-          Parameters
+          Operations
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 space-y-6 overflow-y-auto min-h-0">
         <FieldGroup className="space-y-6">
           <div className="space-y-5">
-            <h3 className="text-lg font-semibold text-gray-200 mb-1">Engine Forms</h3>
-            <div className="space-y-4">
+            <div className="space-y-4 p-4">
               <AddForm />
               <MultiplyForm />
               <FactorialForm />
