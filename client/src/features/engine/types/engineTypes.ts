@@ -1,4 +1,3 @@
-// Engine types
 export interface EngineResponse {
   result: number | string | null;
   success: boolean;
@@ -36,15 +35,3 @@ export interface EngineCalculationResponse {
   message: string | null;
   created_at: string;
 }
-
-// Root types
-export interface RootResponse {
-  message: string;
-  version: string;
-  docs: string;
-}
-
-export interface HealthResponse {
-  status: string;
-}
-

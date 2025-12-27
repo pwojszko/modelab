@@ -3,8 +3,8 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useThrottledIsFetching } from "./useThrottledIsFetching";
+import { useThrottledIsFetching } from "../tanstackPacer/useThrottledIsFetching";
+import { createMutateWithToast } from "./queryUtils";
 
 type ModifiedMutationMessages<TResponse, TRequest> = {
   loading: string;
@@ -31,13 +31,7 @@ export function useModifiedMutation<TRequest, TResponse>({
 
   return {
     ...mutation,
-    mutateWithToast: (request: TRequest) =>
-      toast.promise(mutation.mutateAsync(request), {
-        loading: messages?.loading || "Processing...",
-        success: (data: TResponse) =>
-          messages?.success(data, request) || `Success`,
-        error: (error: Error) => messages?.error(error) || error.message,
-      }),
+    mutateWithToast: createMutateWithToast(mutation.mutateAsync, messages),
     throttledIsPending: useThrottledIsFetching(mutation.isPending, 500),
   };
 }

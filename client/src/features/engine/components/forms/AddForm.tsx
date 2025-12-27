@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addSchema, type AddFormData } from "@/lib/schemas";
-import { useAddNumbers } from "@/features/engine/hooks/useEngine";
+import { addSchema, type AddFormData } from "@/lib/zod/engineSchemas";
+import { useAddNumbers } from "@/features/engine/api/useEngine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FieldError } from "@/components/ui/field";

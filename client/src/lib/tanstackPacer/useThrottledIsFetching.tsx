@@ -10,3 +10,4 @@ export function useThrottledIsFetching(
 
   return throttledIsFetching;
 }
+

@@ -1,5 +1,5 @@
-import { useEngineStatus } from "../features/engine/hooks/useEngine";
-import { useHealth } from "../features/root/components/hooks/useRoot";
+import { useEngineStatus } from "../features/engine/api/useEngine";
+import { useHealth } from "../features/root/api/useRoot";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";

@@ -8,7 +8,7 @@ import {
   AreaChart,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCalculations } from "../../engine/hooks/useEngine";
+import { useCalculations } from "@/features/engine/api/useEngine";
 import { useMemo } from "react";
 
 interface ChartProps {

@@ -6,10 +6,9 @@ import type {
   ProcessStringRequest,
   SumArrayRequest,
   EngineCalculationResponse,
-} from "../types";
-import { API_BASE_URL } from "./config";
+} from "../types/engineTypes";
+import { API_BASE_URL } from "../../../config/apiConfig";
 
-// Engine endpoints
 export async function getEngineStatus(): Promise<EngineResponse> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/status`);
   if (!response.ok) throw new Error("Failed to get engine status");

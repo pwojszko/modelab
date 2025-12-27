@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FieldGroup } from "@/components/ui/field";
-import { AddForm } from "@/features/engine/forms/AddForm";
-import { MultiplyForm } from "@/features/engine/forms/MultiplyForm";
-import { FactorialForm } from "@/features/engine/forms/FactorialForm";
-import { ProcessStringForm } from "@/features/engine/forms/ProcessStringForm";
-import { SumArrayForm } from "@/features/engine/forms/SumArrayForm";
+import { AddForm } from "@/features/engine/components/forms/AddForm";
+import { MultiplyForm } from "@/features/engine/components/forms/MultiplyForm";
+import { FactorialForm } from "@/features/engine/components/forms/FactorialForm";
+import { ProcessStringForm } from "@/features/engine/components/forms/ProcessStringForm";
+import { SumArrayForm } from "@/features/engine/components/forms/SumArrayForm";
 
 export function ParametersPanel() {
   return (

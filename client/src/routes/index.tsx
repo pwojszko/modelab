@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PumpVisualization } from "../features/dashboard/components/PumpVisualization";
-import { ParametersPanel } from "../features/dashboard/components/parametersPanel";
-import { Chart } from "../features/dashboard/components/Chart";
+import { PumpVisualization } from "@/features/engine/components/PumpVisualization";
+import { ParametersPanel } from "@/features/engine/components/ParametersPanel";
+import { Chart } from "@/features/engine/components/EngineChart";
 
 export const Route = createFileRoute("/")({
   component: DashboardPage,

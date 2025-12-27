@@ -1,6 +1,6 @@
 import { UseQueryOptions, useQuery } from "@tanstack/react-query";
-import { useThrottledIsFetching } from "./useThrottledIsFetching";
-import { createRefetchWithToast } from "@/lib/queryUtils";
+import { useThrottledIsFetching } from "../tanstackPacer/useThrottledIsFetching";
+import { createRefetchWithToast } from "./queryUtils";
 
 type ModifiedQueryMessages = {
   loading: string;
@@ -29,3 +29,4 @@ export function useModifiedQuery<TQueryFnData = unknown>({
     }),
   };
 }
+

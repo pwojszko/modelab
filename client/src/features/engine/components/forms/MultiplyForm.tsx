@@ -1,7 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { multiplySchema, type MultiplyFormData } from "@/lib/schemas";
-import { useMultiplyNumbers } from "@/features/engine/hooks/useEngine";
+import { multiplySchema, type MultiplyFormData } from "@/lib/zod/engineSchemas";
+import { useMultiplyNumbers } from "@/features/engine/api/useEngine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FieldError } from "@/components/ui/field";

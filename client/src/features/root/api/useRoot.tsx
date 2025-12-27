@@ -1,5 +1,5 @@
-import * as rootService from "../../../../service/root";
-import { useModifiedQuery } from "@/hooks/useModifiedQuery";
+import * as rootService from "./root";
+import { useModifiedQuery } from "../../../lib/tanstackQuery/useModifiedQuery";
 
 type RootQueryKey = "ROOT" | "HEALTH";
 

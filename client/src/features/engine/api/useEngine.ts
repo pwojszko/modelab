@@ -1,6 +1,6 @@
-import * as engineService from "../../../service/engine";
-import { useModifiedQuery } from "@/hooks/useModifiedQuery";
-import { useModifiedMutation } from "@/hooks/useModifiedMutation";
+import * as engineService from "./engine";
+import { useModifiedQuery } from "@/lib/tanstackQuery/useModifiedQuery";
+import { useModifiedMutation } from "@/lib/tanstackQuery/useModifiedMutation";
 
 type EngineQueryKey = "ENGINE" | "ENGINE_STATUS" | "ENGINE_CALCULATIONS";
 

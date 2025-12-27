@@ -1,10 +1,13 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { processStringSchema, type ProcessStringFormData } from "@/lib/schemas";
+import {
+  processStringSchema,
+  type ProcessStringFormData,
+} from "@/lib/zod/engineSchemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FieldError } from "@/components/ui/field";
-import { useProcessString } from "@/features/engine/hooks/useEngine";
+import { useProcessString } from "@/features/engine/api/useEngine";
 import { Type, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

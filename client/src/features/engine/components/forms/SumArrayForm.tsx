@@ -1,10 +1,10 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sumArraySchema, type SumArrayFormData } from "@/lib/schemas";
+import { sumArraySchema, type SumArrayFormData } from "@/lib/zod/engineSchemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FieldError } from "@/components/ui/field";
-import { useSumArray } from "@/features/engine/hooks/useEngine";
+import { useSumArray } from "@/features/engine/api/useEngine";
 import { Sigma, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

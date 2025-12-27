@@ -1,7 +1,10 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { factorialSchema, type FactorialFormData } from "@/lib/schemas";
-import { useCalculateFactorial } from "@/features/engine/hooks/useEngine";
+import {
+  factorialSchema,
+  type FactorialFormData,
+} from "@/lib/zod/engineSchemas";
+import { useCalculateFactorial } from "@/features/engine/api/useEngine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FieldError } from "@/components/ui/field";
