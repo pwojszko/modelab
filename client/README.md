@@ -1,59 +1,36 @@
-# ModelSLab Client
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Frontend aplikacji ModelSLab zbudowany z React, TypeScript, Vite i Tailwind CSS.
+## Getting Started
 
-## Technologie
-
-- **React 18** - Biblioteka UI
-- **TypeScript** - Typowanie statyczne
-- **Vite** - Szybki bundler i dev server
-- **Tailwind CSS** - Framework CSS utility-first
-
-## Instalacja
+First, run the development server:
 
 ```bash
-pnpm install
-```
-
-## Uruchomienie
-
-```bash
+npm run dev
+# or
+yarn dev
+# or
 pnpm dev
+# or
+bun dev
 ```
 
-Aplikacja będzie dostępna pod adresem: `http://localhost:3000`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Build
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```bash
-pnpm build
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Zbudowane pliki znajdą się w folderze `dist`.
+## Learn More
 
-## Preview builda
+To learn more about Next.js, take a look at the following resources:
 
-```bash
-pnpm preview
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Struktura projektu
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-```
-client/
-├── src/
-│   ├── App.tsx          # Główny komponent aplikacji
-│   ├── main.tsx         # Punkt wejścia
-│   └── index.css        # Globalne style z Tailwind
-├── index.html           # HTML template
-├── vite.config.ts       # Konfiguracja Vite
-├── tsconfig.json        # Konfiguracja TypeScript
-├── tailwind.config.js   # Konfiguracja Tailwind
-└── package.json         # Zależności projektu
-```
+## Deploy on Vercel
 
-## Proxy API
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Vite jest skonfigurowany z proxy do backendu FastAPI:
-
-- Wszystkie requesty do `/api/*` są przekierowywane na `http://localhost:8000`
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
