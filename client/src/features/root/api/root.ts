@@ -1,0 +1,14 @@
+"use server";
+
+const API_BASE_URL = "http://localhost:8000";
+import type { RootResponse, HealthResponse } from "../types/rootTypes";
+
+export async function getRoot(): Promise<RootResponse> {
+  const response = await fetch(`${API_BASE_URL}/`);
+  return response.json();
+}
+
+export async function getHealth(): Promise<HealthResponse> {
+  const response = await fetch(`${API_BASE_URL}/health`);
+  return response.json();
+}
