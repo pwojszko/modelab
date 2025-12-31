@@ -7,27 +7,25 @@ export function PumpVisualization() {
   return (
     <Card className="h-full w-full flex items-center justify-center min-h-0 overflow-hidden relative">
       <CardContent className="p-6 w-full h-full relative">
-        <div className="absolute top-4 left-4 z-20">
-          <div className="min-w-[180px] p-8">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <span className="w-4 h-4 rounded-full bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/50 block" />
-                <span className="absolute inset-0 w-4 h-4 rounded-full bg-emerald-400 animate-ping opacity-75" />
-              </div>
-              <div className="flex-1">
-                <div className="text-2xl font-bold text-emerald-400 drop-shadow-lg">
-                  Running
-                </div>
-                <div className="text-xs text-emerald-300/80 mt-0.5">
-                  All systems operational
-                </div>
-              </div>
+        <div className="absolute top-4 left-12 z-20 min-w-[180px] flex items-center gap-3">
+          <div className="relative">
+            <span className="w-4 h-4 rounded-full bg-success animate-pulse shadow-lg shadow-success/50 block" />
+            <span className="absolute inset-0 w-4 h-4 rounded-full bg-success animate-ping opacity-75" />
+          </div>
+          <div className="flex-1">
+            <div className="text-2xl font-bold text-success drop-shadow-lg">
+              Running
+            </div>
+            <div className="text-xs text-success/80 mt-0.5">
+              All systems operational
             </div>
           </div>
         </div>
+
         <div className="absolute top-4 right-4 z-20">
           <TemperatureWidget />
         </div>
+
         <svg
           width="100%"
           height="100%"

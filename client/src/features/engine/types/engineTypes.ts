@@ -1,7 +1,5 @@
-export interface EngineResponse {
+export interface Engine {
   result: number | string | null;
-  success: boolean;
-  message: string;
   timestamp: Date;
 }
 

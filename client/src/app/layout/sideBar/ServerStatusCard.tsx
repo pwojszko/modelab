@@ -10,20 +10,24 @@ import {
 import { getHealth } from "@/features/root/api/root";
 
 export async function ServerStatusCard() {
-  const healthQuery = await getHealth();
+  const { data, success } = await getHealth();
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Server</CardTitle>
+        <CardDescription>Server Status</CardDescription>
+        <CardAction>
+          <Badge variant="successOutline">
+            {success ? "Online" : "Offline"}
+          </Badge>
+        </CardAction>
       </CardHeader>
 
       <CardContent>
-        <CardAction>
-          <Badge variant="successOutline">Online</Badge>
-        </CardAction>
-
-        <CardDescription>Server Status</CardDescription>
+        <CardDescription>
+          Last Updated: {data?.timestamp?.toLocaleString()}
+        </CardDescription>
       </CardContent>
     </Card>
   );

@@ -4,6 +4,7 @@ export interface RootResponse {
   docs: string;
 }
 
-export interface HealthResponse {
+export interface Health {
   status: string;
+  timestamp: Date;
 }

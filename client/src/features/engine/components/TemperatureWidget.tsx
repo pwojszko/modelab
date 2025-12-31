@@ -1,5 +1,6 @@
 "use client";
 
+import { Card, CardContent } from "@/components/ui/card";
 import { useState, useEffect } from "react";
 
 export function TemperatureWidget() {
@@ -145,153 +146,144 @@ export function TemperatureWidget() {
   };
 
   return (
-    <div className="rounded-xl shadow-2xl p-4 min-w-[180px] relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-background rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-background rounded-full blur-2xl" />
-      </div>
-
+    <Card className="min-w-[180px] relative overflow-hidden">
       <div className="relative z-10">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Temperature
-          </span>
-        </div>
+        <CardContent>
+          {/* Gauge */}
+          <div className="flex items-center justify-center mb-3">
+            <svg width={size} height={size} className="drop-shadow-lg">
+              <defs>
+                {/* Gradient for gauge arc */}
+                <linearGradient
+                  id="gaugeGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#60a5fa" />
+                  <stop offset="33%" stopColor="#22d3ee" />
+                  <stop offset="66%" stopColor="#fbbf24" />
+                  <stop offset="100%" stopColor="#f87171" />
+                </linearGradient>
 
-        {/* Gauge */}
-        <div className="flex items-center justify-center mb-3">
-          <svg width={size} height={size} className="drop-shadow-lg">
-            <defs>
-              {/* Gradient for gauge arc */}
-              <linearGradient
-                id="gaugeGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop offset="0%" stopColor="#60a5fa" />
-                <stop offset="33%" stopColor="#22d3ee" />
-                <stop offset="66%" stopColor="#fbbf24" />
-                <stop offset="100%" stopColor="#f87171" />
-              </linearGradient>
+                {/* Shadow filter for needle */}
+                <filter id="needleShadow">
+                  <feDropShadow
+                    dx="0"
+                    dy="0"
+                    stdDeviation="2"
+                    floodColor="rgba(0,0,0,0.5)"
+                  />
+                </filter>
+              </defs>
 
-              {/* Shadow filter for needle */}
-              <filter id="needleShadow">
-                <feDropShadow
-                  dx="0"
-                  dy="0"
-                  stdDeviation="2"
-                  floodColor="rgba(0,0,0,0.5)"
-                />
-              </filter>
-            </defs>
-
-            {/* Background arc */}
-            <path
-              d={createArcPath(startAngle, endAngle, radius)}
-              fill="none"
-              strokeWidth="12"
-              strokeLinecap="round"
-            />
-
-            {/* Colored gauge arc */}
-            <path
-              d={createArcPath(startAngle, endAngle, radius)}
-              fill="none"
-              stroke="url(#gaugeGradient)"
-              strokeWidth="10"
-              strokeLinecap="round"
-              opacity="0.8"
-            />
-
-            {/* Tick marks */}
-            {ticks.map((tick, index) => (
-              <g key={index}>
-                <line
-                  x1={tick.startX}
-                  y1={tick.startY}
-                  x2={tick.endX}
-                  y2={tick.endY}
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  className="stroke-muted-foreground"
-                />
-                {/* Tick labels */}
-                {index % 2 === 0 && (
-                  <text
-                    x={
-                      centerX + (radius + 12) * Math.cos(angleToRad(tick.angle))
-                    }
-                    y={
-                      centerY + (radius + 12) * Math.sin(angleToRad(tick.angle))
-                    }
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    className="text-[10px] fill-muted-foreground font-semibold"
-                  >
-                    {Math.round(tick.value)}
-                  </text>
-                )}
-              </g>
-            ))}
-
-            {/* Needle */}
-            <g filter="url(#needleShadow)">
-              <line
-                x1={centerX}
-                y1={centerY}
-                x2={needleEndX}
-                y2={needleEndY}
-                stroke={gaugeColor}
-                strokeWidth="3"
+              {/* Background arc */}
+              <path
+                d={createArcPath(startAngle, endAngle, radius)}
+                fill="none"
+                strokeWidth="12"
                 strokeLinecap="round"
-                className="transition-all duration-500 ease-out"
               />
-              {/* Needle center dot */}
-              <circle
-                cx={centerX}
-                cy={centerY}
-                r="6"
-                fill={gaugeColor}
-                className="drop-shadow-lg"
-              />
-              <circle
-                cx={centerX}
-                cy={centerY}
-                r="3"
-                className="fill-background"
-              />
-            </g>
-          </svg>
-        </div>
 
-        {/* Temperature Display */}
-        <div className="text-center absolute -bottom-2 left-0 right-0">
-          <div className="flex items-baseline justify-center gap-1 mb-1">
+              {/* Colored gauge arc */}
+              <path
+                d={createArcPath(startAngle, endAngle, radius)}
+                fill="none"
+                stroke="url(#gaugeGradient)"
+                strokeWidth="10"
+                strokeLinecap="round"
+                opacity="0.8"
+              />
+
+              {/* Tick marks */}
+              {ticks.map((tick, index) => (
+                <g key={index}>
+                  <line
+                    x1={tick.startX}
+                    y1={tick.startY}
+                    x2={tick.endX}
+                    y2={tick.endY}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="stroke-muted-foreground"
+                  />
+                  {/* Tick labels */}
+                  {index % 2 === 0 && (
+                    <text
+                      x={
+                        centerX +
+                        (radius + 12) * Math.cos(angleToRad(tick.angle))
+                      }
+                      y={
+                        centerY +
+                        (radius + 12) * Math.sin(angleToRad(tick.angle))
+                      }
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      className="text-[10px] fill-muted-foreground font-semibold"
+                    >
+                      {Math.round(tick.value)}
+                    </text>
+                  )}
+                </g>
+              ))}
+
+              {/* Needle */}
+              <g filter="url(#needleShadow)">
+                <line
+                  x1={centerX}
+                  y1={centerY}
+                  x2={needleEndX}
+                  y2={needleEndY}
+                  stroke={gaugeColor}
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  className="transition-all duration-500 ease-out"
+                />
+                {/* Needle center dot */}
+                <circle
+                  cx={centerX}
+                  cy={centerY}
+                  r="6"
+                  fill={gaugeColor}
+                  className="drop-shadow-lg"
+                />
+                <circle
+                  cx={centerX}
+                  cy={centerY}
+                  r="3"
+                  className="fill-background"
+                />
+              </g>
+            </svg>
+          </div>
+
+          {/* Temperature Display */}
+          <div className="text-center absolute -bottom-2 left-0 right-0">
+            <div className="flex items-baseline justify-center gap-1 mb-1">
+              <span
+                className="text-xl font-bold drop-shadow-lg transition-colors duration-500"
+                style={{ color: gaugeColor }}
+              >
+                {Math.round(temperature)}
+              </span>
+              <span
+                className="text-lg font-semibold opacity-80 transition-colors duration-500"
+                style={{ color: gaugeColor }}
+              >
+                °C
+              </span>
+            </div>
             <span
-              className="text-xl font-bold drop-shadow-lg transition-colors duration-500"
+              className="text-xs font-medium transition-colors duration-500"
               style={{ color: gaugeColor }}
             >
-              {Math.round(temperature)}
-            </span>
-            <span
-              className="text-lg font-semibold opacity-80 transition-colors duration-500"
-              style={{ color: gaugeColor }}
-            >
-              °C
+              {getStatusText(temperature)}
             </span>
           </div>
-          <span
-            className="text-xs font-medium transition-colors duration-500"
-            style={{ color: gaugeColor }}
-          >
-            {getStatusText(temperature)}
-          </span>
-        </div>
+        </CardContent>
       </div>
-    </div>
+    </Card>
   );
 }

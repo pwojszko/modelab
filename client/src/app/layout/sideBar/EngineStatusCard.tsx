@@ -10,20 +10,24 @@ import {
 import { getEngineStatus } from "@/features/engine/services/engine";
 
 export async function EngineStatusCard() {
-  const engineStatusQuery = await getEngineStatus();
+  const { data, success } = await getEngineStatus();
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Engine</CardTitle>
+        <CardDescription>Calculation Engine</CardDescription>
+        <CardAction>
+          <Badge variant="successOutline">
+            {success ? "Online" : "Offline"}
+          </Badge>
+        </CardAction>
       </CardHeader>
 
       <CardContent>
-        <CardAction>
-          <Badge variant="successOutline">Online</Badge>
-        </CardAction>
-
-        <CardDescription>Calculation Engine</CardDescription>
+        <CardDescription>
+          Last Updated: {data?.timestamp.toLocaleString()}
+        </CardDescription>
       </CardContent>
     </Card>
   );

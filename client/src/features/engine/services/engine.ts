@@ -2,7 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import type {
-  EngineResponse,
+  Engine,
   AddRequest,
   MultiplyRequest,
   FactorialRequest,
@@ -18,9 +18,7 @@ export async function revalidateEngineStatus(): Promise<void> {
   revalidateTag("engine-status", "max");
 }
 
-export async function getEngineStatus(): Promise<
-  ServiceResponse<EngineResponse>
-> {
+export async function getEngineStatus(): Promise<ServiceResponse<Engine>> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/status`, {
     next: {
       tags: ["engine-status"],
@@ -35,7 +33,7 @@ export async function getEngineStatus(): Promise<
     };
   }
 
-  const data: EngineResponse = await response.json();
+  const data: Engine = await response.json();
 
   return {
     data: {
@@ -49,7 +47,7 @@ export async function getEngineStatus(): Promise<
 
 export async function addNumbers(
   request: AddRequest
-): Promise<ServiceResponse<EngineResponse>> {
+): Promise<ServiceResponse<Engine>> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/add`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -77,7 +75,7 @@ export async function addNumbers(
 
 export async function multiplyNumbers(
   request: MultiplyRequest
-): Promise<ServiceResponse<EngineResponse>> {
+): Promise<ServiceResponse<Engine>> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/multiply`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -103,7 +101,7 @@ export async function multiplyNumbers(
 
 export async function calculateFactorial(
   request: FactorialRequest
-): Promise<ServiceResponse<EngineResponse>> {
+): Promise<ServiceResponse<Engine>> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/factorial`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -129,7 +127,7 @@ export async function calculateFactorial(
 
 export async function processString(
   request: ProcessStringRequest
-): Promise<ServiceResponse<EngineResponse>> {
+): Promise<ServiceResponse<Engine>> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/process-string`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -155,7 +153,7 @@ export async function processString(
 
 export async function sumArray(
   request: SumArrayRequest
-): Promise<ServiceResponse<EngineResponse>> {
+): Promise<ServiceResponse<Engine>> {
   const response = await fetch(`${API_BASE_URL}/api/v1/engine/sum-array`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

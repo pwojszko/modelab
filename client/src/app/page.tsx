@@ -4,7 +4,6 @@ import { PumpVisualization } from "@/features/engine/components/PumpVisualizatio
 import { getCalculations } from "@/features/engine/services/engine";
 import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "./layout/sideBar/Sidebar";
-import { Suspense } from "react";
 
 export default async function Home() {
   const calculations = await getCalculations();
